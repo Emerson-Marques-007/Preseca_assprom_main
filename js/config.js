@@ -14,7 +14,7 @@ const SUPABASE_ANON_KEY = (RUNTIME_CONFIG.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1
 
 // URL publica usada para links do QR (celular)
 // Exemplo: https://seu-projeto.netlify.app
-const PUBLIC_BASE_URL = (RUNTIME_CONFIG.PUBLIC_BASE_URL || 'https://seu-projeto.netlify.app').trim();
+const PUBLIC_BASE_URL = (RUNTIME_CONFIG.PUBLIC_BASE_URL || 'https://preseca-assprom-main.vercel.app/').trim();
 
 function resolveBaseUrl() {
   const origemAtual = window.location.origin;
@@ -67,3 +67,4 @@ if (!window.__APP_CONFIG__) {
 // Exportar para uso global
 window.supabaseClient = supabaseClient;
 window.CONFIG = CONFIG;
+
