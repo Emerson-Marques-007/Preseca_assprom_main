@@ -19,37 +19,34 @@
 
   <div class="main-content">
       <div class="prof-topbar">
-        <div class="aluno-topbar-left">
-          <img src="../assets/logo.png" alt="ASSPROM" class="topbar-logo-mark" aria-hidden="true">
-        </div>
-        <div class="aluno-topbar-center">
-          <strong id="topbar-section-label">Área do Aluno</strong>
-        </div>
-        <div class="flex items-center gap-1 prof-topbar-actions aluno-topbar-right">
-          <button class="rail-icon-btn topbar-user-btn" type="button" aria-label="Perfil do aluno" title="Perfil do aluno">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M20 21a8 8 0 0 0-16 0"></path>
-              <circle cx="12" cy="8" r="4"></circle>
-            </svg>
-          </button>
-          <button class="rail-icon-btn theme-toggle-btn" type="button" aria-label="Alternar tema" title="Alternar tema" onclick="Utils.toggleTheme()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <g class="theme-icon-sun">
-                <circle cx="12" cy="12" r="4"></circle>
-                <path d="M12 2v2"></path>
-                <path d="M12 20v2"></path>
-                <path d="m4.93 4.93 1.41 1.41"></path>
-                <path d="m17.66 17.66 1.41 1.41"></path>
-                <path d="M2 12h2"></path>
-                <path d="M20 12h2"></path>
-                <path d="m6.34 17.66-1.41 1.41"></path>
-                <path d="m19.07 4.93-1.41 1.41"></path>
-              </g>
-              <g class="theme-icon-moon">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3c0.05 0 0.1 0 0.15 0A7 7 0 0 0 21 12.79z"></path>
-              </g>
-            </svg>
-          </button>
+        <div class="aluno-topbar" style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 1rem;background:#fff;border-bottom:1px solid #eee;">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <img src="../assets/logo.png" alt="ASSPROM" style="height:32px;width:32px;">
+            <span style="font-size:1.2rem;font-weight:600;color:#3D5A99;">Painel do Aluno</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <button class="btn btn-ghost btn-icon" onclick="Auth.logout()" title="Sair" aria-label="Sair">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </button>
+            <button class="rail-icon-btn theme-toggle-btn" type="button" aria-label="Alternar tema" title="Alternar tema" onclick="Utils.toggleTheme()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <g class="theme-icon-sun">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2"></path>
+                  <path d="M12 20v2"></path>
+                  <path d="m4.93 4.93 1.41 1.41"></path>
+                  <path d="m17.66 17.66 1.41 1.41"></path>
+                  <path d="M2 12h2"></path>
+                  <path d="M20 12h2"></path>
+                  <path d="m6.34 17.66-1.41 1.41"></path>
+                  <path d="m19.07 4.93-1.41 1.41"></path>
+                </g>
+                <g class="theme-icon-moon">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3c0.05 0 0.1 0 0.15 0A7 7 0 0 0 21 12.79z"></path>
+                </g>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
