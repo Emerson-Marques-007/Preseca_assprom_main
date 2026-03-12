@@ -1,0 +1,2965 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3D5A99">
+  <title>ASSPROM | Presença Digital — Área do Professor</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="manifest" href="../manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="loading-overlay" id="loading-initial"><div class="spinner"></div></div>
+
+  <div class="layout-sidebar dashboard-view">
+    <aside class="sidebar" id="sidebar" aria-label="Menu do professor">
+      <!-- Bell / Notificação -->
+      <div class="sidebar-bell-area">
+        <button class="sidebar-link sidebar-bell-btn" type="button" aria-label="Notificações" title="Notificações">
+          <span class="sidebar-link-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </span>
+        </button>
+      </div>
+      <div class="sidebar-divider-line"></div>
+      <!-- Navegação principal -->
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-link active" data-section="dashboard" data-tooltip="Dashboard" aria-label="Dashboard" aria-current="page" onclick="showSection('dashboard'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></span>
+          <span class="sidebar-link-label">Dashboard</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="disciplinas" data-tooltip="Disciplinas" aria-label="Disciplinas" onclick="showSection('disciplinas'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+          <span class="sidebar-link-label">Disciplinas</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="turmas" data-tooltip="Turmas" aria-label="Turmas" onclick="showSection('turmas'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+          <span class="sidebar-link-label">Turmas</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="qrcode" data-tooltip="QR Code" aria-label="QR Code" onclick="showSection('qrcode'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h6v2h-6z"/></svg></span>
+          <span class="sidebar-link-label">QR Code</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="planilhas" data-tooltip="Planilhas" aria-label="Planilhas" onclick="showSection('planilhas'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16M16 4v16"/></svg></span>
+          <span class="sidebar-link-label">Planilhas</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="presencas" data-tooltip="Presenças" aria-label="Presenças" onclick="showSection('presencas'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16"/><path d="M7 16V9"/><path d="M12 16V5"/><path d="M17 16v-4"/></svg></span>
+          <span class="sidebar-link-label">Presenças</span>
+        </a>
+        <a href="#" class="sidebar-link" data-section="usuarios" data-tooltip="Usuários" aria-label="Usuários" onclick="showSection('usuarios'); return false;">
+          <span class="sidebar-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="sidebar-link-label">Usuários</span>
+        </a>
+      </nav>
+      <!-- Rodapé com logout -->
+      <div class="sidebar-footer">
+        <div class="sidebar-divider-line sidebar-divider-line--footer"></div>
+        <button class="sidebar-link sidebar-logout-btn" type="button" aria-label="Sair" title="Sair" onclick="Auth.logout()">
+          <span class="sidebar-link-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </span>
+        </button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div class="main-content">
+      <div class="prof-topbar">
+        <div class="flex items-center gap-1">
+          <button class="btn btn-ghost btn-icon menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false" onclick="toggleSidebar()">☰</button>
+          <button class="btn btn-ghost btn-icon sidebar-collapse-toggle" id="sidebar-collapse-toggle" aria-label="Recolher menu lateral" aria-controls="sidebar" aria-pressed="false" onclick="toggleSidebarCollapsed()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <div>
+            <strong id="topbar-section-label">Dashboard</strong>
+            <p id="topbar-section-desc" class="topbar-section-desc">Visão rápida das suas aulas, presença de hoje e atividades recentes.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1 prof-topbar-actions">
+          <div class="command-search" role="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input id="dashboard-quick-filter" type="search" placeholder="Pesquisar" oninput="filtrarDashboardRapido()" aria-label="Buscar aluno ou turma no dashboard">
+          </div>
+          <button class="rail-icon-btn topbar-user-btn" id="topbar-user-btn" type="button" aria-label="Perfil do professor" title="Perfil do professor">
+            <span id="topbar-user-initial" class="topbar-user-initial" aria-hidden="true">?</span>
+          </button>
+          <button class="rail-icon-btn theme-toggle-btn" type="button" aria-label="Alternar tema claro ou escuro" title="Alternar tema" onclick="Utils.toggleTheme()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <g class="theme-icon-sun">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </g>
+              <g class="theme-icon-moon">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3c0.05 0 0.1 0 0.15 0A7 7 0 0 0 21 12.79z"></path>
+              </g>
+            </svg>
+          </button>
+          <span class="rail-icon-btn rail-connection-indicator rail-connection-neutral" id="topbar-conn-state" aria-label="Google: verificando" title="Google: verificando">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+              <path d="M12 20h.01"></path>
+              <path class="wifi-off-slash" d="M4 4l16 16"></path>
+            </svg>
+          </span>
+          <span id="topbar-google-chip" class="status-chip status-chip-neutral hidden" style="display:none !important;">Google: verificando...</span>
+        </div>
+      </div>
+
+      <section id="section-dashboard">
+        <div class="page-header">
+          <p class="page-subtitle" id="dash-date"></p>
+        </div>
+        <div class="grid grid-3 gap-2 mb-3">
+          <div class="card stat-card stat-card-neutral"><div class="stat-value" id="dash-total-alunos">--</div><div class="stat-label">Alunos</div></div>
+          <div class="card stat-card stat-card-success"><div class="stat-value" id="dash-presentes-hoje">--</div><div class="stat-label">Presentes Hoje</div></div>
+          <div class="card stat-card stat-card-warning"><div class="stat-value" id="dash-atrasados-hoje">--</div><div class="stat-label">Atrasados Hoje</div></div>
+        </div>
+        <div class="card mb-3">
+          <div class="flex justify-between items-center gap-2 flex-wrap">
+            <div>
+              <h3>Dashboard Executivo</h3>
+              <p class="text-sm text-muted">Métricas consolidadas por período, disciplina e turma.</p>
+            </div>
+            <select id="dash-periodo" class="form-select" style="width:160px;" onchange="carregarDashboardExecutivo()">
+              <option value="7">Últimos 7 dias</option>
+              <option value="30" selected>Últimos 30 dias</option>
+              <option value="90">Últimos 90 dias</option>
+            </select>
+          </div>
+          <div id="dash-executivo" class="grid grid-3 gap-2 mt-2"></div>
+        </div>
+        <div class="card mb-3 dashboard-timeline-wrap"><div id="dash-aulas-hoje"><div class="empty-state"><div class="spinner"></div></div></div></div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="table" id="dash-tabela">
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>Turma</th>
+                  <th>Disciplina</th>
+                  <th>Hora</th>
+                  <th>Status</th>
+                  <th>Atraso</th>
+                  <th>Risco</th>
+                </tr>
+              </thead>
+              <tbody id="dash-ultimas-presencas"><tr><td colspan="7" class="text-center text-muted p-3">Carregando...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-disciplinas" class="hidden">
+        <div class="page-header flex justify-between items-center">
+          <button class="btn btn-primary" onclick="modalNovaDisciplina()">+ Nova Disciplina</button>
+        </div>
+        <div id="lista-disciplinas" class="grid grid-2 gap-2"><div class="empty-state"><div class="spinner"></div></div></div>
+      </section>
+
+      <section id="section-turmas" class="hidden">
+        <div class="page-header flex justify-between items-center">
+          <button class="btn btn-primary" onclick="modalNovaTurma()">+ Nova Turma</button>
+        </div>
+        <div id="lista-turmas"><div class="empty-state"><div class="spinner"></div></div></div>
+      </section>
+
+      <section id="section-qrcode" class="hidden">
+        <div class="card mb-3">
+          <div class="flex gap-2 flex-wrap">
+            <div class="form-group" style="flex:1;min-width:220px;">
+              <label class="form-label">Selecione a Turma</label>
+              <select class="form-select" id="qr-turma-select" onchange="prepararQR()"><option value="">-- Selecione --</option></select>
+            </div>
+            <div class="form-group" style="width:140px;min-width:120px;">
+              <label class="form-label">Validade (min)</label>
+              <input class="form-input" type="number" id="qr-validade-min" min="1" max="60" value="5" onchange="prepararQR()">
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg btn-block" id="btn-gerar-qr" onclick="iniciarQR()" disabled>Gerar QR</button>
+        </div>
+        <div class="card" id="qr-display" style="display:none;">
+          <div class="text-center">
+            <h3 id="qr-turma-nome">Turma</h3>
+            <div id="qr-code-img" aria-label="QR Code" style="max-width:280px;margin:0 auto;display:block;"></div>
+            <p id="qr-timer" class="text-sm mt-2"></p>
+            <p id="qr-info-renovacao" class="text-sm text-muted"></p>
+            <a id="qr-link-curto" href="#" target="_blank" rel="noopener noreferrer" class="text-sm">Abrir link curto</a>
+            <div class="flex justify-center gap-1 mt-2">
+              <button class="btn btn-outline btn-sm" onclick="copiarLinkQR()">Copiar Link</button>
+              <button class="btn btn-ghost btn-sm" onclick="pararQR()">Parar QR</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-planilhas" class="hidden">
+        <div class="page-header flex justify-between items-center">
+          <button class="btn btn-primary" onclick="modalNovaPlanilha()">+ Nova Planilha</button>
+        </div>
+
+        <div class="card mb-3">
+          <div class="flex gap-2 flex-wrap">
+            <div class="form-group" style="flex:1;min-width:220px;">
+              <label class="form-label">Turma</label>
+              <select id="gs-turma-select" class="form-select"><option value="">-- Selecione --</option></select>
+            </div>
+            <div class="form-group" style="width:180px;min-width:160px;">
+              <label class="form-label">Data</label>
+              <input id="gs-data" class="form-input" type="date">
+            </div>
+            <div class="form-group" style="align-self:flex-end;">
+              <button class="btn btn-outline" onclick="conectarGoogleOAuth()">Conectar Google</button>
+            </div>
+            <div class="form-group" style="align-self:flex-end;">
+              <button class="btn btn-primary" onclick="criarPlanilhaGoogleTurma()">Criar Planilha Google (Turma)</button>
+            </div>
+            <div class="form-group" style="align-self:flex-end;">
+              <button class="btn btn-outline" onclick="sincronizarTurmaData()">Sincronizar Data Selecionada</button>
+            </div>
+          </div>
+          <p id="gs-oauth-status" class="text-sm text-muted mt-2">Google: verificando conexao...</p>
+          <div id="gs-health-panel" class="grid grid-3 gap-2 mt-2"></div>
+          <div id="gs-integracoes-list" class="grid grid-2 gap-2 mt-2"></div>
+        </div>
+
+        <div id="planilhas-grid" class="planilhas-grid">
+          <div class="empty-state"><div class="spinner"></div></div>
+        </div>
+      </section>
+
+      <section id="section-presencas" class="hidden">
+        <div class="card mb-3">
+          <div class="flex flex-wrap gap-2">
+            <div class="form-group" style="margin:0;flex:1;min-width:180px;">
+              <label class="form-label">Turma</label>
+              <select class="form-select" id="pres-turma-select" onchange="carregarPresencas()"><option value="">Todas</option></select>
+            </div>
+            <div class="form-group" style="margin:0;flex:1;min-width:140px;">
+              <label class="form-label">Data</label>
+              <input class="form-input" type="date" id="pres-data" onchange="carregarPresencas()">
+            </div>
+            <div class="form-group" style="margin:0;flex:1;min-width:160px;">
+              <label class="form-label">Status</label>
+              <select class="form-select" id="pres-status-select" onchange="aplicarFiltrosPresencas()">
+                <option value="">Todos</option>
+                <option value="presente">Presente</option>
+                <option value="atrasado">Atrasado</option>
+                <option value="ausente">Ausente</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin:0;flex:1.3;min-width:220px;">
+              <label class="form-label">Buscar no relatório</label>
+              <input class="form-input" type="search" id="pres-busca-local" placeholder="Nome, matrícula, status, horário..." oninput="aplicarFiltrosPresencas()" aria-label="Buscar no relatório de presenças">
+            </div>
+            <div class="form-group" style="margin:0;align-self:flex-end;">
+              <button class="btn btn-outline btn-sm" onclick="exportarCSV()">Exportar CSV</button>
+            </div>
+            <div class="form-group" style="margin:0;align-self:flex-end;">
+              <button class="btn btn-outline btn-sm" onclick="exportarXLSX()">Exportar XLSX</button>
+            </div>
+            <div class="form-group" style="margin:0;align-self:flex-end;">
+              <button class="btn btn-outline btn-sm" onclick="exportarPDF()">Exportar PDF</button>
+            </div>
+          </div>
+          <p id="pres-filtro-resumo" class="text-sm text-muted mt-2">Selecione uma turma ou data para visualizar os registros.</p>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="table" id="pres-tabela">
+              <thead id="pres-thead">
+                <tr>
+                  <th class="pres-col-sort" data-col="nome" onclick="ordenarPresencas('nome')" title="Ordenar por Aluno" aria-sort="none" tabindex="0">Aluno <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="matricula" onclick="ordenarPresencas('matricula')" title="Ordenar por Matrícula" aria-sort="none" tabindex="0">Matrícula <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="turma" onclick="ordenarPresencas('turma')" title="Ordenar por Turma" aria-sort="none" tabindex="0">Turma <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="data" onclick="ordenarPresencas('data')" title="Ordenar por Data" aria-sort="none" tabindex="0">Data <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="hora" onclick="ordenarPresencas('hora')" title="Ordenar por Chegada" aria-sort="none" tabindex="0">Chegada <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="status" onclick="ordenarPresencas('status')" title="Ordenar por Status" aria-sort="none" tabindex="0">Status <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="atraso" onclick="ordenarPresencas('atraso')" title="Ordenar por Atraso" aria-sort="none" tabindex="0">Atraso <span class="sort-icon"></span></th>
+                  <th class="pres-col-sort" data-col="risco" onclick="ordenarPresencas('risco')" title="Ordenar por Risco" aria-sort="none" tabindex="0">Risco <span class="sort-icon"></span></th>
+                </tr>
+              </thead>
+              <tbody id="pres-tbody"><tr><td colspan="8" class="text-center text-muted p-3">Selecione uma turma ou data para visualizar os registros.</td></tr></tbody>
+            </table>
+          </div>
+          <div class="flex justify-between items-center gap-2 mt-2" style="flex-wrap:wrap;">
+            <div class="flex items-center gap-1">
+              <label class="text-sm text-muted" for="pres-page-size">Itens por página</label>
+              <select class="form-select" id="pres-page-size" style="width:90px;" onchange="alterarPaginacaoPresencas()">
+                <option value="10">10</option>
+                <option value="25" selected>25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+            <p id="pres-page-summary" class="text-sm text-muted" style="margin:0;">Página 1</p>
+            <div class="flex items-center gap-1">
+              <button class="btn btn-outline btn-sm" id="pres-page-prev" onclick="mudarPaginaPresencas(-1)">Anterior</button>
+              <button class="btn btn-outline btn-sm" id="pres-page-next" onclick="mudarPaginaPresencas(1)">Próxima</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-usuarios" class="hidden">
+        <div class="card mb-3">
+          <div class="flex flex-wrap gap-2 items-end">
+            <div class="form-group" style="flex:1;min-width:220px;margin:0;">
+              <label class="form-label">Buscar usuário</label>
+              <input class="form-input" type="search" id="usuarios-busca" placeholder="Nome, matrícula ou e-mail..." oninput="filtrarUsuarios()" aria-label="Buscar usuário">
+            </div>
+            <div class="form-group" style="width:160px;min-width:130px;margin:0;">
+              <label class="form-label">Filtrar papel</label>
+              <select class="form-select" id="usuarios-filtro-role" onchange="filtrarUsuarios()">
+                <option value="">Todos</option>
+                <option value="aluno">Alunos</option>
+                <option value="professor">Professores</option>
+              </select>
+            </div>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-end;" onclick="carregarUsuarios()">Atualizar</button>
+          </div>
+          <p id="usuarios-resumo" class="text-sm text-muted mt-2">Carregando usuários...</p>
+        </div>
+        <div class="card">
+          <div class="table-wrapper">
+            <table class="table" id="usuarios-tabela">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Matrícula</th>
+                  <th>E-mail</th>
+                  <th>Papel</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="usuarios-tbody">
+                <tr><td colspan="5" class="text-center text-muted p-3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="prof-right-rail" aria-label="Visão geral">
+      <div class="rail-head">
+        <h2>Visão Geral</h2>
+        <div class="rail-head-actions">
+          <span class="rail-connection-indicator rail-connection-neutral" id="rail-conn-state" aria-label="Google: verificando" title="Google: verificando" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+              <path d="M12 20h.01"></path>
+              <path class="wifi-off-slash" d="M4 4l16 16"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="rail-toggle" role="tablist" aria-label="Resumo lateral">
+        <button id="rail-tab-turmas" class="rail-toggle-btn active" type="button" role="tab" aria-selected="true" onclick="setRailTab('turmas')">Turmas</button>
+        <button id="rail-tab-alunos" class="rail-toggle-btn" type="button" role="tab" aria-selected="false" onclick="setRailTab('alunos')">Alunos</button>
+      </div>
+
+      <div id="rail-content-turmas" class="rail-content" role="tabpanel">
+        <article class="rail-card">
+          <span class="rail-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>Turmas ativas</span>
+          <strong id="rail-total-turmas">--</strong>
+        </article>
+        <article class="rail-card">
+          <span class="rail-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg>Aulas hoje</span>
+          <strong id="rail-aulas-hoje">--</strong>
+        </article>
+        <div id="rail-turmas-hoje-wrap">
+          <p class="rail-turmas-hoje-titulo">Turmas de hoje</p>
+          <div id="rail-turmas-hoje"></div>
+        </div>
+      </div>
+
+      <div id="rail-content-alunos" class="rail-content hidden" role="tabpanel">
+        <article class="rail-card">
+          <span class="rail-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg>Total de alunos</span>
+          <strong id="rail-total-alunos">--</strong>
+        </article>
+        <article class="rail-card">
+          <span class="rail-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>Presentes hoje</span>
+          <strong id="rail-presentes-hoje">--</strong>
+        </article>
+        <article class="rail-card">
+          <span class="rail-card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v5"></path><path d="M12 16h.01"></path></svg>Atrasados hoje</span>
+          <strong id="rail-atrasados-hoje">--</strong>
+        </article>
+      </div>
+
+      <button class="btn btn-outline btn-sm rail-refresh-btn" type="button" onclick="refreshProfessorData()">Atualizar Dados</button>
+
+      <div class="rail-divider"></div>
+
+      <div class="rail-logo-wrap">
+        <img src="../assets/logo.png" alt="ASSPROM">
+      </div>
+    </aside>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+  <script>
+    // ============================================
+    // TOOLTIP DE DICA (form-hint)
+    // ============================================
+    function toggleHint(el) {
+      const isOpen = el.classList.contains('open');
+      // Fecha todos os outros abertos
+      document.querySelectorAll('.form-hint.open').forEach(h => h.classList.remove('open'));
+      if (!isOpen) {
+        el.classList.add('open');
+        // Fecha ao clicar fora
+        setTimeout(() => {
+          document.addEventListener('click', function closeHint(e) {
+            if (!el.contains(e.target)) {
+              el.classList.remove('open');
+              document.removeEventListener('click', closeHint);
+            }
+          });
+        }, 10);
+      }
+    }
+
+    // ============================================
+    // VARIÁVEIS GLOBAIS
+    // ============================================
+    let perfil = null;
+    let minhasDisciplinas = [];
+    let minhasTurmas = [];
+    let minhasPlanilhas = [];
+    let integracoesGoogle = [];
+    let googleSyncLogs = [];
+    let presencasCache = [];
+    let presencasFiltradas = [];
+    let presencasSortCol = 'data';
+    let presencasSortAsc = false;
+    let presencasPaginaAtual = 1;
+    let presencasItensPorPagina = 25;
+    let qrInterval = null;
+    let qrTimerInterval = null;
+    let qrTurmaAtual = null;
+    let qrValidadeAtualMin = CONFIG.QR_VALIDADE_MIN;
+    let qrLinkCurtoAtual = '';
+    const SECTION_LABELS = {
+      dashboard:   'Dashboard',
+      disciplinas: 'Disciplinas',
+      turmas:      'Turmas',
+      qrcode:      'Gerador de QR Code',
+      planilhas:   'Planilhas Google',
+      presencas:   'Relatório de Presenças',
+      usuarios:    'Gerenciar Usuários',
+    };
+    const SECTION_DESCS = {
+      dashboard:   'Visão geral em tempo real das suas aulas, alunos presentes e atividades de hoje.',
+      disciplinas: 'Cadastre e organize todas as matérias que você leciona nesta instituição.',
+      turmas:      'Gerencie suas turmas — alunos, horários e salas em um só lugar.',
+      qrcode:      'Gere um QR Code temporário para registro de presença e compartilhe o link com a turma.',
+      planilhas:   'Conecte ao Google Sheets e sincronize a frequência dos alunos automaticamente.',
+      presencas:   'Consulte e filtre o histórico completo de presenças, atrasos e ausências por turma e data.',
+      usuarios:    'Gerencie dados cadastrais e exclusão de contas. O papel é definido automaticamente pelo domínio do e-mail no cadastro.',
+    };
+
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    async function init() {
+      const autorizado = await Auth.requireRole('professor');
+      if (!autorizado) return;
+
+      perfil = await Auth.getPerfil();
+      const sidebarNome = document.getElementById('sidebar-nome');
+      const sidebarAvatar = document.getElementById('sidebar-avatar');
+      const topbarUserInitial = document.getElementById('topbar-user-initial');
+      const topbarUserBtn = document.getElementById('topbar-user-btn');
+      if (sidebarNome) sidebarNome.textContent = perfil.nome.split(' ')[0];
+      if (sidebarAvatar) sidebarAvatar.textContent = Utils.getIniciais(perfil.nome);
+      if (topbarUserInitial) {
+        const initial = (perfil?.nome || '').trim().charAt(0).toUpperCase() || '?';
+        topbarUserInitial.textContent = initial;
+      }
+      if (topbarUserBtn && perfil?.nome) {
+        topbarUserBtn.title = `Perfil de ${perfil.nome}`;
+        topbarUserBtn.setAttribute('aria-label', `Perfil de ${perfil.nome}`);
+      }
+      atualizarPlaceholderBusca('dashboard');
+      document.getElementById('dash-date').textContent =
+        new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('qr-validade-min').value = CONFIG.QR_VALIDADE_MIN;
+      document.getElementById('gs-data').value = Utils.today();
+      document.getElementById('loading-initial').style.display = 'none';
+
+      await tratarRetornoGoogleOAuth();
+      await carregarStatusGoogleOAuth();
+
+      await carregarDadosIniciais();
+    }
+
+    async function carregarDadosIniciais() {
+      await Promise.all([
+        carregarDisciplinas(),
+        carregarTurmasGeral(),
+        carregarPlanilhas(),
+        carregarIntegracoesGoogle(),
+      ]);
+      await carregarDashboard();
+      atualizarResumoSidebar();
+    }
+
+    async function refreshProfessorData() {
+      try {
+        Utils.showLoading('Atualizando dados do painel...');
+        await carregarDadosIniciais();
+        Utils.hideLoading();
+        Utils.showToast('Dados atualizados.', 'success');
+      } catch (err) {
+        Utils.hideLoading();
+        Utils.showToast(err.message || 'Falha ao atualizar dados.', 'error');
+      }
+    }
+
+    // ============================================
+    // NAVEGAÇÃO / SIDEBAR
+    // ============================================
+    const SECTIONS = ['dashboard', 'disciplinas', 'turmas', 'qrcode', 'planilhas', 'presencas', 'usuarios'];
+    const SIDEBAR_COLLAPSED_STORAGE_KEY = 'professor.sidebar.collapsed';
+
+    function isDesktop() {
+      return window.matchMedia('(min-width: 768px)').matches;
+    }
+
+    function setSidebarCollapsed(collapsed) {
+      if (!isDesktop()) return;
+      const layout = document.querySelector('.layout-sidebar');
+      const toggleBtn = document.getElementById('sidebar-collapse-toggle');
+      if (!layout) return;
+
+      layout.classList.toggle('sidebar-collapsed', collapsed);
+      if (toggleBtn) {
+        toggleBtn.setAttribute('aria-pressed', collapsed ? 'true' : 'false');
+        toggleBtn.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Recolher menu lateral');
+      }
+      localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, collapsed ? '1' : '0');
+    }
+
+    function toggleSidebarCollapsed() {
+      if (!isDesktop()) return;
+      const layout = document.querySelector('.layout-sidebar');
+      if (!layout) return;
+      setSidebarCollapsed(!layout.classList.contains('sidebar-collapsed'));
+    }
+
+    function restoreSidebarState() {
+      const saved = localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY);
+      setSidebarCollapsed(saved === '1');
+    }
+
+    function setSidebarOpen(open) {
+      const sidebar = document.getElementById('sidebar');
+      const menuBtn = document.getElementById('menu-toggle');
+      sidebar.classList.toggle('open', open);
+
+      if (menuBtn) {
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      if (!isDesktop()) {
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      setSidebarOpen(!sidebar.classList.contains('open'));
+    }
+
+    function closeSidebar() {
+      setSidebarOpen(false);
+    }
+
+    function showSection(name) {
+      SECTIONS.forEach(s => {
+        document.getElementById('section-' + s).classList.toggle('hidden', s !== name);
+      });
+      const currentSection = document.getElementById('section-' + name);
+      if (currentSection) {
+        currentSection.classList.remove('section-enter');
+        void currentSection.offsetWidth;
+        currentSection.classList.add('section-enter');
+      }
+      const topLabel = document.getElementById('topbar-section-label');
+      if (topLabel) topLabel.textContent = SECTION_LABELS[name] || 'Painel';
+      const topDesc = document.getElementById('topbar-section-desc');
+      if (topDesc) topDesc.textContent = SECTION_DESCS[name] || '';
+      atualizarPlaceholderBusca(name);
+      // Atualizar nav ativa
+      document.querySelectorAll('.sidebar-link').forEach((link) => {
+        const isActive = link.dataset.section === name;
+        link.classList.toggle('active', isActive);
+        link.setAttribute('aria-current', isActive ? 'page' : 'false');
+      });
+      // Fechar sidebar mobile
+      closeSidebar();
+
+      // Painel direito visível só no Dashboard
+      const layoutEl = document.querySelector('.layout-sidebar');
+      if (layoutEl) layoutEl.classList.toggle('dashboard-view', name === 'dashboard');
+
+      // Carregar dados específicos
+      if (name === 'presencas') { popularSelectPresencas(); carregarPresencas(); }
+      if (name === 'turmas') renderTurmas();
+      if (name === 'qrcode') popularSelectTurmasQR();
+      if (name === 'planilhas') {
+        renderPlanilhas();
+        renderIntegracoesGoogle();
+      }
+      if (name === 'usuarios') carregarUsuarios();
+      if (name !== 'dashboard') {
+        const quickFilter = document.getElementById('dashboard-quick-filter');
+        if (quickFilter) quickFilter.value = '';
+      }
+    }
+
+    function atualizarPlaceholderBusca(sectionName) {
+      const input = document.getElementById('dashboard-quick-filter');
+      if (!input) return;
+      input.placeholder = 'Pesquisar';
+    }
+
+    function obterSecaoAtiva() {
+      return SECTIONS.find(s => !document.getElementById('section-' + s).classList.contains('hidden')) || 'dashboard';
+    }
+
+    function filtrarElementosPorTexto(selector, termo) {
+      const itens = Array.from(document.querySelectorAll(selector));
+      if (!itens.length) return;
+      itens.forEach((el) => {
+        const txt = normalizarBuscaTexto(el.textContent || '');
+        el.style.display = textoAtendeBusca(txt, termo) ? '' : 'none';
+      });
+    }
+
+    function normalizarBuscaTexto(valor) {
+      return (valor || '')
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+    }
+
+    function textoAtendeBusca(textoBase, termoBusca) {
+      const termo = normalizarBuscaTexto(termoBusca);
+      if (!termo) return true;
+      const tokens = termo.split(/\s+/).filter(Boolean);
+      return tokens.every((token) => textoBase.includes(token));
+    }
+
+    function atualizarResumoSidebar() {
+      const el = document.getElementById('sidebar-summary');
+      if (!el) return;
+      const hoje = Utils.getDiaSemana();
+      const aulasHoje = minhasTurmas.filter(t => t.dia_semana === hoje).length;
+      el.textContent = `Hoje: ${aulasHoje} turma${aulasHoje === 1 ? '' : 's'}`;
+      atualizarVisaoGeral();
+    }
+
+    function setRailTab(tab) {
+      const tabTurmas = document.getElementById('rail-tab-turmas');
+      const tabAlunos = document.getElementById('rail-tab-alunos');
+      const contentTurmas = document.getElementById('rail-content-turmas');
+      const contentAlunos = document.getElementById('rail-content-alunos');
+
+      const mostrarTurmas = tab !== 'alunos';
+
+      if (tabTurmas) {
+        tabTurmas.classList.toggle('active', mostrarTurmas);
+        tabTurmas.setAttribute('aria-selected', mostrarTurmas ? 'true' : 'false');
+      }
+      if (tabAlunos) {
+        tabAlunos.classList.toggle('active', !mostrarTurmas);
+        tabAlunos.setAttribute('aria-selected', !mostrarTurmas ? 'true' : 'false');
+      }
+      if (contentTurmas) contentTurmas.classList.toggle('hidden', !mostrarTurmas);
+      if (contentAlunos) contentAlunos.classList.toggle('hidden', mostrarTurmas);
+    }
+
+    function atualizarVisaoGeral() {
+      const totalTurmasEl = document.getElementById('rail-total-turmas');
+      const aulasHojeEl = document.getElementById('rail-aulas-hoje');
+      const totalAlunosEl = document.getElementById('rail-total-alunos');
+      const presentesEl = document.getElementById('rail-presentes-hoje');
+      const atrasadosEl = document.getElementById('rail-atrasados-hoje');
+
+      const hoje = Utils.getDiaSemana();
+      const turmasHoje = minhasTurmas
+        .filter(t => t.dia_semana === hoje)
+        .sort((a, b) => a.hora_inicio.localeCompare(b.hora_inicio));
+
+      if (totalTurmasEl) totalTurmasEl.textContent = String(minhasTurmas.length);
+      if (aulasHojeEl) {
+        aulasHojeEl.textContent = turmasHoje.length === 0
+          ? 'Nenhuma'
+          : `${turmasHoje.length} ${turmasHoje.length === 1 ? 'turma' : 'turmas'}`;
+      }
+
+      // Lista de turmas de hoje no rail
+      const railTurmasHoje = document.getElementById('rail-turmas-hoje');
+      const railTurmasWrap = document.getElementById('rail-turmas-hoje-wrap');
+      if (railTurmasHoje) {
+        if (turmasHoje.length === 0) {
+          railTurmasWrap.style.display = 'none';
+        } else {
+          railTurmasWrap.style.display = '';
+          const agora = Utils.timeToMinutes(Utils.currentTime());
+          railTurmasHoje.innerHTML = turmasHoje.map(t => {
+            const inicio = Utils.timeToMinutes(t.hora_inicio);
+            const fim = Utils.timeToMinutes(t.hora_fim);
+            const emAndamento = agora >= inicio && agora < fim;
+            const encerrada = agora >= fim;
+            const statusClass = emAndamento ? 'rail-aula-ativa' : encerrada ? 'rail-aula-encerrada' : 'rail-aula-proxima';
+            const statusLabel = emAndamento ? 'Em andamento' : encerrada ? 'Encerrada' : 'Pr\u00f3xima';
+            return `<div class="rail-aula-item ${statusClass}">
+              <div class="rail-aula-hora">${Utils.formatTime(t.hora_inicio)}</div>
+              <div class="rail-aula-info">
+                <strong>${Utils.escapeHtml(t.disciplinas?.nome || t.nome_turma)}</strong>
+                <span>${Utils.escapeHtml(t.nome_turma)}${t.sala ? ` &middot; Sala ${Utils.escapeHtml(t.sala)}` : ''}</span>
+              </div>
+              <span class="rail-aula-status">${statusLabel}</span>
+            </div>`;
+          }).join('');
+        }
+      }
+
+      const totalAlunosTexto = document.getElementById('dash-total-alunos')?.textContent || '0';
+      const presentesTexto = document.getElementById('dash-presentes-hoje')?.textContent || '0';
+      const atrasadosTexto = document.getElementById('dash-atrasados-hoje')?.textContent || '0';
+
+      if (totalAlunosEl) totalAlunosEl.textContent = totalAlunosTexto;
+      if (presentesEl) presentesEl.textContent = presentesTexto;
+      if (atrasadosEl) atrasadosEl.textContent = atrasadosTexto;
+    }
+
+    function atualizarStatusGoogleRail(statusClass, message) {
+      const railIndicator = document.getElementById('rail-conn-state');
+      const topbarIndicator = document.getElementById('topbar-conn-state');
+      if (railIndicator) {
+        railIndicator.className = `rail-connection-indicator ${statusClass}`;
+        railIndicator.title = message;
+        railIndicator.setAttribute('aria-label', message);
+      }
+      if (topbarIndicator) {
+        topbarIndicator.className = `rail-icon-btn rail-connection-indicator ${statusClass}`;
+        topbarIndicator.title = message;
+        topbarIndicator.setAttribute('aria-label', message);
+      }
+    }
+
+    function filtrarDashboardRapido() {
+      const input = document.getElementById('dashboard-quick-filter');
+      const termo = (input?.value || '').trim().toLowerCase();
+      const secaoAtiva = obterSecaoAtiva();
+
+      if (secaoAtiva === 'dashboard') {
+        const rows = Array.from(document.querySelectorAll('#dash-ultimas-presencas tr'));
+        if (!rows.length) return;
+        rows.forEach((row) => {
+          const isEmptyState = row.querySelector('td[colspan]');
+          if (isEmptyState) return;
+          const txt = (row.textContent || '').toLowerCase();
+          row.style.display = !termo || txt.includes(termo) ? '' : 'none';
+        });
+        return;
+      }
+
+      if (secaoAtiva === 'disciplinas') {
+        filtrarElementosPorTexto('#lista-disciplinas .card', termo);
+        return;
+      }
+
+      if (secaoAtiva === 'turmas') {
+        filtrarElementosPorTexto('#lista-turmas .card', termo);
+        return;
+      }
+
+      if (secaoAtiva === 'planilhas') {
+        filtrarElementosPorTexto('#planilhas-grid .planilha-card', termo);
+        return;
+      }
+
+      if (secaoAtiva === 'presencas') {
+        aplicarFiltrosPresencas();
+      }
+    }
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeSidebar();
+    });
+
+    window.addEventListener('resize', () => {
+      if (isDesktop()) {
+        document.body.style.overflow = '';
+        setSidebarOpen(false);
+        restoreSidebarState();
+      } else {
+        const layout = document.querySelector('.layout-sidebar');
+        if (layout) layout.classList.remove('sidebar-collapsed');
+      }
+    });
+
+    // ============================================
+    // DASHBOARD
+    // ============================================
+    async function carregarDashboard() {
+      try {
+        // Total de alunos nas minhas turmas
+        const alunoIds = new Set();
+        for (const turma of minhasTurmas) {
+          const { data } = await supabaseClient
+            .from('turma_alunos')
+            .select('aluno_id')
+            .eq('turma_id', turma.id);
+          (data || []).forEach(a => alunoIds.add(a.aluno_id));
+        }
+        document.getElementById('dash-total-alunos').textContent = alunoIds.size;
+
+        // Presenças de hoje
+        const turmaIds = minhasTurmas.map(t => t.id);
+        if (turmaIds.length > 0) {
+          const { data: presHoje } = await supabaseClient
+            .from('presencas')
+            .select('status')
+            .in('turma_id', turmaIds)
+            .eq('data', Utils.today());
+
+          const presentes = (presHoje || []).filter(p => p.status === 'presente').length;
+          const atrasados = (presHoje || []).filter(p => p.status === 'atrasado').length;
+          document.getElementById('dash-presentes-hoje').textContent = presentes;
+          document.getElementById('dash-atrasados-hoje').textContent = atrasados;
+        }
+
+        // Aulas de hoje
+        const diaSemana = Utils.getDiaSemana();
+        const aulasHoje = minhasTurmas.filter(t => t.dia_semana === diaSemana);
+        const container = document.getElementById('dash-aulas-hoje');
+
+        if (aulasHoje.length === 0) {
+          container.innerHTML = '<div class="empty-state"><p>Nenhuma aula hoje.</p></div>';
+        } else {
+          const agora = Utils.timeToMinutes(Utils.currentTime());
+          container.innerHTML = aulasHoje.map(a => {
+            const inicio = Utils.timeToMinutes(a.hora_inicio);
+            const fim = Utils.timeToMinutes(a.hora_fim);
+            const emAndamento = agora >= inicio && agora < fim;
+            const encerrada = agora >= fim;
+            const statusClass = emAndamento ? 'timeline-ativa' : encerrada ? 'timeline-encerrada' : '';
+            const statusBadge = emAndamento
+              ? '<span class="badge badge-success" style="font-size:0.7rem">Em andamento</span>'
+              : encerrada
+              ? '<span class="badge badge-neutral" style="font-size:0.7rem">Encerrada</span>'
+              : '<span class="badge badge-info" style="font-size:0.7rem">Pr\u00f3xima</span>';
+            return `
+            <article class="timeline-item ${statusClass}">
+              <div class="timeline-hour">${Utils.formatTime(a.hora_inicio)}</div>
+              <div class="timeline-body">
+                <strong>${Utils.escapeHtml(a.disciplinas?.nome || '')}</strong>
+                ${statusBadge}
+                <p class="text-sm text-secondary">
+                  ${Utils.escapeHtml(a.nome_turma)} &middot; ${Utils.formatTime(a.hora_inicio)}&ndash;${Utils.formatTime(a.hora_fim)}
+                  ${a.sala ? ` &middot; Sala ${Utils.escapeHtml(a.sala)}` : ''}
+                </p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="showSection('qrcode');document.getElementById('qr-turma-select').value='${a.id}';prepararQR();">QR Code</button>
+            </article>
+          `;
+          }).join('');
+        }
+
+        // Últimas presenças
+        if (turmaIds.length > 0) {
+          const { data: ultimas } = await supabaseClient
+            .from('presencas')
+            .select('hora_registro, status, minutos_atraso, distancia_metros, risco_fraude_score, aluno_id, turma_id, perfis!presencas_aluno_id_fkey(nome), turmas!presencas_turma_id_fkey(nome_turma, disciplinas(nome))')
+            .in('turma_id', turmaIds)
+            .order('hora_registro', { ascending: false })
+            .limit(10);
+
+          const tbody = document.getElementById('dash-ultimas-presencas');
+          if (!ultimas || ultimas.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted p-3">Nenhuma presença registrada.</td></tr>';
+          } else {
+            tbody.innerHTML = ultimas.map(p => {
+              const badgeClass = p.status === 'presente' ? 'badge-success' : p.status === 'atrasado' ? 'badge-warning' : 'badge-danger';
+              const statusLabel = p.status === 'presente' ? 'Presente' : p.status === 'atrasado' ? 'Atrasado' : 'Ausente';
+              const atrasoLabel = p.status === 'atrasado' ? `${p.minutos_atraso || 0} min` : '--';
+              return `<tr>
+                <td>${Utils.escapeHtml(p.perfis?.nome || '--')}</td>
+                <td>${Utils.escapeHtml(p.turmas?.nome_turma || '--')}</td>
+                <td>${Utils.escapeHtml(p.turmas?.disciplinas?.nome || '--')}</td>
+                <td>${new Date(p.hora_registro).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</td>
+                <td><span class="badge ${badgeClass}">${statusLabel}</span></td>
+                <td>${atrasoLabel}</td>
+                <td>${renderBadgeRisco(p.risco_fraude_score || 0)}</td>
+              </tr>`;
+            }).join('');
+          }
+        }
+
+        await carregarDashboardExecutivo();
+
+        filtrarDashboardRapido();
+        atualizarVisaoGeral();
+      } catch (err) {
+        console.error('Erro dashboard:', err);
+      }
+    }
+
+    // ============================================
+    // DISCIPLINAS
+    // ============================================
+    async function carregarDisciplinas() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('disciplinas')
+          .select('*')
+          .eq('professor_id', perfil.id)
+          .order('nome');
+
+        if (error) throw error;
+        minhasDisciplinas = data || [];
+        renderDisciplinas();
+      } catch (err) {
+        console.error('Erro ao carregar disciplinas:', err);
+      }
+    }
+
+    function renderDisciplinas() {
+      const container = document.getElementById('lista-disciplinas');
+      if (minhasDisciplinas.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <p>Nenhuma disciplina cadastrada.</p>
+            <button class="btn btn-primary mt-2" onclick="modalNovaDisciplina()">+ Criar Disciplina</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = minhasDisciplinas.map(d => `
+        <div class="card">
+          <div class="flex justify-between items-center">
+            <h4>${Utils.escapeHtml(d.nome)}</h4>
+            <div class="flex gap-1">
+              <button class="btn btn-ghost btn-sm" aria-label="Editar disciplina" title="Editar disciplina" onclick="modalEditarDisciplina('${d.id}','${Utils.escapeHtml(d.nome)}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+                <span class="sr-only">Editar</span>
+              </button>
+              <button class="btn btn-ghost btn-sm" aria-label="Excluir disciplina" title="Excluir disciplina" onclick="deletarDisciplina('${d.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                <span class="sr-only">Excluir</span>
+              </button>
+            </div>
+          </div>
+          <p class="text-sm text-muted">Criada em ${Utils.formatDate(d.created_at)}</p>
+        </div>
+      `).join('');
+
+      filtrarDashboardRapido();
+    }
+
+    function modalNovaDisciplina() {
+      Utils.showModal('Nova Disciplina', `
+        <form onsubmit="salvarDisciplina(event)">
+          <div class="form-group">
+            <label class="form-label required">Nome da Disciplina</label>
+            <input class="form-input" type="text" id="disc-nome" placeholder="Ex: Informática Básica" required autofocus>
+            <span class="form-hint" onclick="toggleHint(this)" tabindex="0" role="button" aria-label="Mais informações">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span class="form-hint-text">Use um nome descritivo que identifique claramente a disciplina.</span>
+            </span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar Disciplina
+          </button>
+        </form>
+      `);
+    }
+
+    function modalEditarDisciplina(id, nomeAtual) {
+      Utils.showModal('Editar Disciplina', `
+        <form onsubmit="atualizarDisciplina(event, '${id}')">
+          <div class="form-group">
+            <label class="form-label required">Nome da Disciplina</label>
+            <input class="form-input" type="text" id="disc-nome-edit" value="${nomeAtual}" required autofocus>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Atualizar
+          </button>
+        </form>
+      `);
+    }
+
+    async function salvarDisciplina(e) {
+      e.preventDefault();
+      const nome = document.getElementById('disc-nome').value.trim();
+      const { error } = await supabaseClient
+        .from('disciplinas')
+        .insert({ nome, professor_id: perfil.id });
+
+      if (error) {
+        Utils.showToast('Erro ao criar disciplina: ' + error.message, 'error');
+        return;
+      }
+      Utils.closeModal();
+      Utils.showToast('Disciplina criada com sucesso!', 'success');
+      await carregarDisciplinas();
+    }
+
+    async function atualizarDisciplina(e, id) {
+      e.preventDefault();
+      const nome = document.getElementById('disc-nome-edit').value.trim();
+      const { error } = await supabaseClient
+        .from('disciplinas')
+        .update({ nome })
+        .eq('id', id);
+
+      if (error) {
+        Utils.showToast('Erro ao atualizar: ' + error.message, 'error');
+        return;
+      }
+      Utils.closeModal();
+      Utils.showToast('Disciplina atualizada!', 'success');
+      await carregarDisciplinas();
+    }
+
+    async function deletarDisciplina(id) {
+      if (!confirm('Tem certeza? Isso excluirá todas as turmas e presenças vinculadas.')) return;
+      const { error } = await supabaseClient.from('disciplinas').delete().eq('id', id);
+      if (error) {
+        Utils.showToast('Erro ao excluir: ' + error.message, 'error');
+        return;
+      }
+      Utils.showToast('Disciplina excluída.', 'success');
+      await carregarDisciplinas();
+      await carregarTurmasGeral();
+    }
+
+    // ============================================
+    // TURMAS
+    // ============================================
+    async function carregarTurmasGeral() {
+      try {
+        const { data, error } = await supabaseClient
+          .from('turmas')
+          .select('*, disciplinas(nome, professor_id)')
+          .order('dia_semana')
+          .order('hora_inicio');
+
+        if (error) throw error;
+        // Filtrar apenas turmas do professor logado
+        minhasTurmas = (data || []).filter(t => t.disciplinas?.professor_id === perfil.id);
+        renderTurmas();
+        popularSelectTurmasGoogle();
+        atualizarResumoSidebar();
+      } catch (err) {
+        console.error('Erro ao carregar turmas:', err);
+      }
+    }
+
+    function renderTurmas() {
+      const container = document.getElementById('lista-turmas');
+      if (minhasTurmas.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <p>Nenhuma turma cadastrada.</p>
+            <button class="btn btn-primary mt-2" onclick="modalNovaTurma()">+ Criar Turma</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = minhasTurmas.map(t => `
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="flex justify-between items-center mb-1">
+            <div>
+              <h4>${Utils.escapeHtml(t.nome_turma)}</h4>
+              <p class="text-sm text-secondary">${Utils.escapeHtml(t.disciplinas?.nome || '')}</p>
+            </div>
+            <div class="flex gap-1">
+              <button class="btn btn-ghost btn-sm" onclick="verAlunosTurma('${t.id}', '${Utils.escapeHtml(t.nome_turma)}')">Alunos</button>
+              <button class="btn btn-ghost btn-sm" aria-label="Editar turma" title="Editar turma" onclick="modalEditarTurma('${t.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+                <span class="sr-only">Editar</span>
+              </button>
+              <button class="btn btn-ghost btn-sm" aria-label="Excluir turma" title="Excluir turma" onclick="deletarTurma('${t.id}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                <span class="sr-only">Excluir</span>
+              </button>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            <span class="badge badge-info">${Utils.getDiaSemanaLabel(t.dia_semana)}</span>
+            <span class="badge badge-info">🕐 ${Utils.formatTime(t.hora_inicio)} - ${Utils.formatTime(t.hora_fim)}</span>
+            ${t.sala ? `<span class="badge badge-info">📍 ${Utils.escapeHtml(t.sala)}</span>` : ''}
+            ${t.latitude ? '<span class="badge badge-success">GPS ✓</span>' : '<span class="badge badge-warning">Sem GPS</span>'}
+          </div>
+        </div>
+      `).join('');
+
+      filtrarDashboardRapido();
+    }
+
+    function modalNovaTurma() {
+      if (minhasDisciplinas.length === 0) {
+        Utils.showToast('Crie uma disciplina primeiro.', 'warning');
+        showSection('disciplinas');
+        return;
+      }
+
+      const discOptions = minhasDisciplinas.map(d =>
+        `<option value="${d.id}">${Utils.escapeHtml(d.nome)}</option>`
+      ).join('');
+
+      const diasOptions = [0,1,2,3,4,5,6].map(d =>
+        `<option value="${d}">${Utils.getDiaSemanaLabel(d)}</option>`
+      ).join('');
+
+      Utils.showModal('Nova Turma', `
+        <form onsubmit="salvarTurma(event)">
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Informações Básicas
+          </div>
+
+          <div class="form-group">
+            <label class="form-label required">Disciplina</label>
+            <select class="form-select" id="turma-disc" required>${discOptions}</select>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">Nome da Turma</label>
+            <input class="form-input" type="text" id="turma-nome" placeholder="Ex: Turma A — Manhã" required autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">Dia da Semana</label>
+            <select class="form-select" id="turma-dia" required>${diasOptions}</select>
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Horário
+          </div>
+
+          <div class="flex gap-2">
+            <div class="form-group" style="flex:1;">
+              <label class="form-label required">Início</label>
+              <input class="form-input" type="time" id="turma-inicio" required>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label required">Fim</label>
+              <input class="form-input" type="time" id="turma-fim" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sala</label>
+            <input class="form-input" type="text" id="turma-sala" placeholder="Ex: Lab 01">
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Localização GPS
+          </div>
+
+          <div class="flex gap-2">
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">Latitude</label>
+              <input class="form-input" type="number" step="any" id="turma-lat" placeholder="-23.5505">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">Longitude</label>
+              <input class="form-input" type="number" step="any" id="turma-lng" placeholder="-46.6333">
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm btn-block mb-2" onclick="capturarGPS()">
+            📍 Usar Minha Localização Atual
+          </button>
+          <span class="form-hint" onclick="toggleHint(this)" tabindex="0" role="button" aria-label="Mais informações">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span class="form-hint-text">Clique no botão acima para preencher automaticamente a latitude e longitude com sua posição atual.</span>
+          </span>
+          <div class="form-group" style="margin-top:0.875rem;">
+            <label class="form-label">Raio de Validação (metros)</label>
+            <input class="form-input" type="number" id="turma-raio" value="50" min="10" max="500">
+            <span class="form-hint" onclick="toggleHint(this)" tabindex="0" role="button" aria-label="Mais informações">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span class="form-hint-text">Distância máxima (em metros) que o aluno pode estar da sala para marcar presença. Recomendado: 50–100m.</span>
+            </span>
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 8a6 6 0 0 1 12 0"></path><path d="M8.5 10.5a3.5 3.5 0 0 1 7 0"></path><circle cx="12" cy="15" r="1"></circle></svg>
+            Beacon / BLE (opcional)
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nome do dispositivo BLE</label>
+            <input class="form-input" type="text" id="turma-ble-name" placeholder="Ex: Sala-101">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service UUID BLE</label>
+            <input class="form-input" type="text" id="turma-ble-service" placeholder="0000180d-0000-1000-8000-00805f9b34fb">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:1rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar Turma
+          </button>
+        </form>
+      `);
+    }
+
+    async function capturarGPS() {
+      try {
+        Utils.showToast('Obtendo localização...', 'info');
+        const loc = await Utils.obterLocalizacao();
+        document.getElementById('turma-lat').value = loc.latitude.toFixed(6);
+        document.getElementById('turma-lng').value = loc.longitude.toFixed(6);
+        Utils.showToast('Localização capturada!', 'success');
+      } catch (err) {
+        Utils.showToast(err.message, 'error');
+      }
+    }
+
+    async function salvarTurma(e) {
+      e.preventDefault();
+      const dados = {
+        disciplina_id: document.getElementById('turma-disc').value,
+        nome_turma: document.getElementById('turma-nome').value.trim(),
+        dia_semana: parseInt(document.getElementById('turma-dia').value),
+        hora_inicio: document.getElementById('turma-inicio').value,
+        hora_fim: document.getElementById('turma-fim').value,
+        sala: document.getElementById('turma-sala').value.trim() || null,
+        latitude: parseFloat(document.getElementById('turma-lat').value) || null,
+        longitude: parseFloat(document.getElementById('turma-lng').value) || null,
+        raio_metros: parseInt(document.getElementById('turma-raio').value) || 50,
+        ble_device_name: document.getElementById('turma-ble-name').value.trim() || null,
+        ble_service_uuid: document.getElementById('turma-ble-service').value.trim() || null,
+      };
+
+      const { error } = await supabaseClient.from('turmas').insert(dados);
+      if (error) {
+        Utils.showToast('Erro: ' + error.message, 'error');
+        return;
+      }
+      Utils.closeModal();
+      Utils.showToast('Turma criada!', 'success');
+      await carregarTurmasGeral();
+    }
+
+    async function modalEditarTurma(turmaId) {
+      const turma = minhasTurmas.find(t => t.id === turmaId);
+      if (!turma) return;
+
+      const discOptions = minhasDisciplinas.map(d =>
+        `<option value="${d.id}" ${d.id === turma.disciplina_id ? 'selected' : ''}>${Utils.escapeHtml(d.nome)}</option>`
+      ).join('');
+
+      const diasOptions = [0,1,2,3,4,5,6].map(d =>
+        `<option value="${d}" ${d === turma.dia_semana ? 'selected' : ''}>${Utils.getDiaSemanaLabel(d)}</option>`
+      ).join('');
+
+      Utils.showModal('Editar Turma', `
+        <form onsubmit="atualizarTurma(event, '${turmaId}')">
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Informações Básicas
+          </div>
+
+          <div class="form-group">
+            <label class="form-label required">Disciplina</label>
+            <select class="form-select" id="ed-turma-disc" required>${discOptions}</select>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">Nome da Turma</label>
+            <input class="form-input" type="text" id="ed-turma-nome" value="${Utils.escapeHtml(turma.nome_turma)}" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">Dia da Semana</label>
+            <select class="form-select" id="ed-turma-dia" required>${diasOptions}</select>
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Horário
+          </div>
+
+          <div class="flex gap-2">
+            <div class="form-group" style="flex:1;">
+              <label class="form-label required">Início</label>
+              <input class="form-input" type="time" id="ed-turma-inicio" value="${turma.hora_inicio}" required>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label required">Fim</label>
+              <input class="form-input" type="time" id="ed-turma-fim" value="${turma.hora_fim}" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sala</label>
+            <input class="form-input" type="text" id="ed-turma-sala" value="${Utils.escapeHtml(turma.sala || '')}">
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Localização GPS
+          </div>
+
+          <div class="flex gap-2">
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">Latitude</label>
+              <input class="form-input" type="number" step="any" id="ed-turma-lat" value="${turma.latitude || ''}">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">Longitude</label>
+              <input class="form-input" type="number" step="any" id="ed-turma-lng" value="${turma.longitude || ''}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Raio (metros)</label>
+            <input class="form-input" type="number" id="ed-turma-raio" value="${turma.raio_metros || 50}">
+            <span class="form-hint" onclick="toggleHint(this)" tabindex="0" role="button" aria-label="Mais informações">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span class="form-hint-text">Distância máxima em metros para validação de presença.</span>
+            </span>
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 8a6 6 0 0 1 12 0"></path><path d="M8.5 10.5a3.5 3.5 0 0 1 7 0"></path><circle cx="12" cy="15" r="1"></circle></svg>
+            Beacon / BLE (opcional)
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nome do dispositivo BLE</label>
+            <input class="form-input" type="text" id="ed-turma-ble-name" value="${Utils.escapeHtml(turma.ble_device_name || '')}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service UUID BLE</label>
+            <input class="form-input" type="text" id="ed-turma-ble-service" value="${Utils.escapeHtml(turma.ble_service_uuid || '')}">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:1rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Atualizar Turma
+          </button>
+        </form>
+      `);
+    }
+
+    async function atualizarTurma(e, turmaId) {
+      e.preventDefault();
+      const dados = {
+        disciplina_id: document.getElementById('ed-turma-disc').value,
+        nome_turma: document.getElementById('ed-turma-nome').value.trim(),
+        dia_semana: parseInt(document.getElementById('ed-turma-dia').value),
+        hora_inicio: document.getElementById('ed-turma-inicio').value,
+        hora_fim: document.getElementById('ed-turma-fim').value,
+        sala: document.getElementById('ed-turma-sala').value.trim() || null,
+        latitude: parseFloat(document.getElementById('ed-turma-lat').value) || null,
+        longitude: parseFloat(document.getElementById('ed-turma-lng').value) || null,
+        raio_metros: parseInt(document.getElementById('ed-turma-raio').value) || 50,
+        ble_device_name: document.getElementById('ed-turma-ble-name').value.trim() || null,
+        ble_service_uuid: document.getElementById('ed-turma-ble-service').value.trim() || null,
+      };
+
+      const { error } = await supabaseClient.from('turmas').update(dados).eq('id', turmaId);
+      if (error) {
+        Utils.showToast('Erro: ' + error.message, 'error');
+        return;
+      }
+      Utils.closeModal();
+      Utils.showToast('Turma atualizada!', 'success');
+      await carregarTurmasGeral();
+    }
+
+    async function deletarTurma(id) {
+      if (!confirm('Excluir turma e todos os registros de presença?')) return;
+      const { error } = await supabaseClient.from('turmas').delete().eq('id', id);
+      if (error) {
+        Utils.showToast('Erro: ' + error.message, 'error');
+        return;
+      }
+      Utils.showToast('Turma excluída.', 'success');
+      await carregarTurmasGeral();
+    }
+
+    // --- Alunos da Turma ---
+    async function verAlunosTurma(turmaId, nomeTurma) {
+      const { data: alunos, error } = await supabaseClient
+        .from('turma_alunos')
+        .select('id, aluno_id, perfis!turma_alunos_aluno_id_fkey(nome, matricula)')
+        .eq('turma_id', turmaId);
+
+      if (error) {
+        Utils.showToast('Erro: ' + error.message, 'error');
+        return;
+      }
+
+      const listaHtml = (alunos || []).length === 0
+        ? '<p class="text-muted text-center">Nenhum aluno vinculado.</p>'
+        : '<div style="max-height:300px;overflow-y:auto;">' + (alunos || []).map(a => `
+          <div class="presenca-card" style="margin-bottom:0.5rem;">
+            <div style="flex:1;">
+              <strong>${Utils.escapeHtml(a.perfis?.nome || '--')}</strong>
+              <p class="text-sm text-muted">Matrícula: ${Utils.escapeHtml(a.perfis?.matricula || '--')}</p>
+            </div>
+            <button class="btn btn-danger btn-sm" onclick="removerAluno('${a.id}', '${turmaId}', '${Utils.escapeHtml(nomeTurma)}')">Remover</button>
+          </div>
+        `).join('') + '</div>';
+
+      Utils.showModal(`Alunos — ${nomeTurma}`, `
+        ${listaHtml}
+        <hr style="margin:1rem 0;border:none;border-top:1px solid var(--border);">
+        <h4 class="mb-1">Adicionar Aluno</h4>
+        <div class="flex gap-1">
+          <input class="form-input" type="text" id="add-aluno-matricula" placeholder="Matrícula do aluno" style="flex:1;">
+          <button class="btn btn-primary" onclick="adicionarAluno('${turmaId}', '${Utils.escapeHtml(nomeTurma)}')">Adicionar</button>
+        </div>
+      `);
+    }
+
+    async function adicionarAluno(turmaId, nomeTurma) {
+      const matricula = document.getElementById('add-aluno-matricula').value.trim();
+      if (!matricula) return;
+
+      // Buscar aluno pela matrícula
+      const { data: aluno, error: aErr } = await supabaseClient
+        .from('perfis')
+        .select('id, nome')
+        .eq('matricula', matricula)
+        .eq('role', 'aluno')
+        .single();
+
+      if (aErr || !aluno) {
+        Utils.showToast('Aluno com matrícula "' + matricula + '" não encontrado.', 'error');
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from('turma_alunos')
+        .insert({ turma_id: turmaId, aluno_id: aluno.id });
+
+      if (error) {
+        if (error.message.includes('duplicate') || error.code === '23505') {
+          Utils.showToast('Aluno já está nesta turma.', 'warning');
+        } else {
+          Utils.showToast('Erro: ' + error.message, 'error');
+        }
+        return;
+      }
+
+      Utils.showToast(`${aluno.nome} adicionado!`, 'success');
+      Utils.closeModal();
+      verAlunosTurma(turmaId, nomeTurma);
+    }
+
+    async function removerAluno(id, turmaId, nomeTurma) {
+      if (!confirm('Remover aluno desta turma?')) return;
+      const { error } = await supabaseClient.from('turma_alunos').delete().eq('id', id);
+      if (error) {
+        Utils.showToast('Erro: ' + error.message, 'error');
+        return;
+      }
+      Utils.showToast('Aluno removido.', 'success');
+      Utils.closeModal();
+      verAlunosTurma(turmaId, nomeTurma);
+    }
+
+    // ============================================
+    // QR CODE DINÂMICO
+    // ============================================
+    function popularSelectTurmasQR() {
+      const select = document.getElementById('qr-turma-select');
+      const optionsHtml = minhasTurmas.map(t =>
+        `<option value="${t.id}">${Utils.escapeHtml(t.disciplinas?.nome || '')} — ${Utils.escapeHtml(t.nome_turma)} (${Utils.getDiaSemanaLabel(t.dia_semana)} ${Utils.formatTime(t.hora_inicio)})</option>`
+      ).join('');
+      select.innerHTML = '<option value="">-- Selecione a Turma --</option>' + optionsHtml;
+
+      // Também popular select de presenças (via função dedicada)
+      popularSelectPresencas();
+    }
+
+    function popularSelectPresencas() {
+      const selectPres = document.getElementById('pres-turma-select');
+      if (!selectPres) return;
+      const optionsHtml = minhasTurmas.map(t =>
+        `<option value="${t.id}">${Utils.escapeHtml(t.disciplinas?.nome || '')} — ${Utils.escapeHtml(t.nome_turma)}</option>`
+      ).join('');
+      selectPres.innerHTML = '<option value="">Todas</option>' + optionsHtml;
+    }
+
+    function prepararQR() {
+      const turmaId = document.getElementById('qr-turma-select').value;
+      const valor = parseInt(document.getElementById('qr-validade-min').value, 10);
+      const validade = Number.isNaN(valor) ? CONFIG.QR_VALIDADE_MIN : valor;
+      const validadeNormalizada = Math.min(60, Math.max(1, validade));
+      document.getElementById('qr-validade-min').value = validadeNormalizada;
+      qrValidadeAtualMin = validadeNormalizada;
+      document.getElementById('btn-gerar-qr').disabled = !turmaId;
+    }
+
+    async function iniciarQR() {
+      try {
+        const turmaId = document.getElementById('qr-turma-select').value;
+        if (!turmaId) return;
+
+        await consumirRateLimit('qr_generate', turmaId, 20, 900);
+
+        qrTurmaAtual = minhasTurmas.find(t => t.id === turmaId);
+        if (!qrTurmaAtual) return;
+
+        document.getElementById('qr-turma-nome').textContent =
+          `${qrTurmaAtual.disciplinas?.nome} — ${qrTurmaAtual.nome_turma}`;
+        const qrDisplay = document.getElementById('qr-display');
+        qrDisplay.classList.remove('hidden');
+        qrDisplay.style.display = '';
+        document.getElementById('btn-gerar-qr').disabled = true;
+
+        prepararQR();
+        document.getElementById('qr-info-renovacao').textContent =
+          `O QR Code será renovado automaticamente a cada ${qrValidadeAtualMin} min.`;
+
+        await gerarNovoQR();
+
+        // Renovar QR conforme validade selecionada
+        qrInterval = setInterval(gerarNovoQR, qrValidadeAtualMin * 60 * 1000);
+      } catch (err) {
+        Utils.showToast(err.message || 'Erro ao iniciar QR Code.', 'error');
+      }
+    }
+
+    function gerarSlugCurto(tamanho = 8) {
+      const chars = 'abcdefghjkmnpqrstuvwxyz23456789';
+      let slug = '';
+      const random = crypto.getRandomValues(new Uint8Array(tamanho));
+      for (let i = 0; i < tamanho; i++) {
+        slug += chars[random[i] % chars.length];
+      }
+      return slug;
+    }
+
+    async function gerarNovoQR() {
+      if (!qrTurmaAtual) return;
+
+      try {
+        const { data: refreshed } = await supabaseClient.auth.refreshSession();
+        const session = refreshed?.session || (await supabaseClient.auth.getSession()).data.session;
+        if (!session?.user?.id) {
+          throw new Error('Sessao expirada. Faca login novamente para gerar QR.');
+        }
+
+        const expiraEm = new Date(Date.now() + qrValidadeAtualMin * 60 * 1000).toISOString();
+
+        let tokenData = null;
+        let tentativas = 0;
+        while (!tokenData && tentativas < 5) {
+          tentativas++;
+          const slug = gerarSlugCurto(6);
+          const { data, error } = await supabaseClient
+            .from('qr_tokens')
+            .insert({
+              turma_id: qrTurmaAtual.id,
+              expira_em: expiraEm,
+              slug
+            })
+            .select('token, slug')
+            .single();
+
+          if (!error && data) {
+            tokenData = data;
+            break;
+          }
+
+          if (!error || (error.code !== '23505' && !String(error.message || '').toLowerCase().includes('slug'))) {
+            throw error;
+          }
+        }
+
+        if (!tokenData) {
+          throw new Error('Não foi possível gerar um link curto único. Tente novamente.');
+        }
+
+        qrLinkCurtoAtual = `${CONFIG.BASE_URL}/p.html?s=${encodeURIComponent(tokenData.slug)}`;
+        const urlQR = qrLinkCurtoAtual;
+
+        if (/localhost|127\.0\.0\.1/i.test(CONFIG.BASE_URL)) {
+          Utils.showToast('QR gerado com localhost. Defina PUBLIC_BASE_URL em js/config.js para acesso no celular.', 'warning');
+        }
+
+        const inputLink = document.getElementById('qr-link-curto');
+        if (inputLink) {
+          const linkDigitavel = qrLinkCurtoAtual
+            .replace(/^https?:\/\//i, '')
+            .replace(/^www\./i, '');
+          inputLink.href = qrLinkCurtoAtual;
+          inputLink.title = qrLinkCurtoAtual;
+          inputLink.textContent = linkDigitavel;
+        }
+
+        // Gerar QR Code
+        const qrContainer = document.getElementById('qr-code-img');
+        qrContainer.innerHTML = '';
+
+        const canvas = document.createElement('canvas');
+        await QRCode.toCanvas(canvas, urlQR, {
+          width: 280,
+          margin: 2,
+          color: { dark: '#111827', light: '#FFFFFF' }
+        });
+        qrContainer.appendChild(canvas);
+
+        // Iniciar timer
+        iniciarTimer(qrValidadeAtualMin * 60);
+
+      } catch (err) {
+        console.error('Erro ao gerar QR:', err);
+        Utils.showToast('Erro ao gerar QR Code.', 'error');
+      }
+    }
+
+    function iniciarTimer(segundos) {
+      if (qrTimerInterval) clearInterval(qrTimerInterval);
+      let restante = segundos;
+      const timerEl = document.getElementById('qr-timer');
+
+      const atualizar = () => {
+        const min = Math.floor(restante / 60);
+        const seg = restante % 60;
+        timerEl.textContent = `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
+        timerEl.classList.toggle('expiring', restante <= 30);
+        restante--;
+        if (restante < 0) clearInterval(qrTimerInterval);
+      };
+
+      atualizar();
+      qrTimerInterval = setInterval(atualizar, 1000);
+    }
+
+    function pararQR() {
+      if (qrInterval) clearInterval(qrInterval);
+      if (qrTimerInterval) clearInterval(qrTimerInterval);
+      qrTurmaAtual = null;
+      qrLinkCurtoAtual = '';
+      const qrDisplay = document.getElementById('qr-display');
+      qrDisplay.classList.add('hidden');
+      qrDisplay.style.display = 'none';
+      document.getElementById('btn-gerar-qr').disabled = false;
+      const inputLink = document.getElementById('qr-link-curto');
+      if (inputLink) {
+        inputLink.href = '#';
+        inputLink.textContent = 'Abrir link curto';
+      }
+      Utils.showToast('QR Code desativado.', 'info');
+    }
+
+    async function copiarLinkQR() {
+      if (!qrLinkCurtoAtual) {
+        Utils.showToast('Gere um QR Code primeiro.', 'warning');
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(qrLinkCurtoAtual);
+        Utils.showToast('Link copiado!', 'success');
+      } catch (err) {
+        const temp = document.createElement('textarea');
+        temp.value = qrLinkCurtoAtual;
+        temp.setAttribute('readonly', 'readonly');
+        temp.style.position = 'fixed';
+        temp.style.top = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        Utils.showToast('Link copiado!', 'success');
+      }
+    }
+
+    function abrirLinkQR() {
+      if (!qrLinkCurtoAtual) {
+        Utils.showToast('Gere um QR Code primeiro.', 'warning');
+        return;
+      }
+      window.open(qrLinkCurtoAtual, '_blank', 'noopener,noreferrer');
+    }
+
+    function popularSelectTurmasGoogle() {
+      const select = document.getElementById('gs-turma-select');
+      if (!select) return;
+      select.innerHTML = '<option value="">-- Selecione uma turma --</option>' + minhasTurmas.map(t =>
+        `<option value="${t.id}">${Utils.escapeHtml(t.disciplinas?.nome || '')} — ${Utils.escapeHtml(t.nome_turma)}</option>`
+      ).join('');
+    }
+
+    function getGoogleRedirectUri() {
+      return `${window.location.origin}${window.location.pathname}`;
+    }
+
+    async function conectarGoogleOAuth() {
+      try {
+        Utils.showLoading('Conectando com Google...');
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session?.access_token) {
+          throw new Error('Sessao expirada. Faca login novamente.');
+        }
+
+        const data = await invokeGoogleSheetsFunction({
+          action: 'get_oauth_url',
+          redirect_uri: getGoogleRedirectUri(),
+        }, session.access_token);
+
+        if (!data?.auth_url) {
+          throw new Error('Nao foi possivel gerar URL de autorizacao Google.');
+        }
+
+        window.location.href = data.auth_url;
+      } catch (err) {
+        Utils.hideLoading();
+        Utils.showToast(err.message || 'Falha ao iniciar conexao com Google.', 'error');
+      }
+    }
+
+    async function tratarRetornoGoogleOAuth() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+      const scope = params.get('scope') || '';
+      const error = params.get('error');
+
+      if (error) {
+        Utils.showToast(`Google OAuth recusado: ${error}`, 'warning');
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+
+      // Evita conflito com outros fluxos de auth que tambem podem usar query params.
+      if (!code || !scope.includes('spreadsheets')) {
+        return;
+      }
+
+      try {
+        Utils.showLoading('Finalizando conexao Google...');
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session?.access_token) {
+          throw new Error('Sessao expirada. Faca login novamente.');
+        }
+
+        const data = await invokeGoogleSheetsFunction({
+          action: 'exchange_oauth_code',
+          code,
+          redirect_uri: getGoogleRedirectUri(),
+        }, session.access_token);
+
+        if (!data?.ok) {
+          throw new Error(data?.error || 'Nao foi possivel conectar com Google.');
+        }
+
+        Utils.showToast('Conta Google conectada com sucesso!', 'success');
+      } catch (err) {
+        Utils.showToast(err.message || 'Falha ao concluir conexao OAuth Google.', 'error');
+      } finally {
+        Utils.hideLoading();
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    async function carregarStatusGoogleOAuth() {
+      const statusEl = document.getElementById('gs-oauth-status');
+      const chipEl = document.getElementById('topbar-google-chip');
+      if (!statusEl) return;
+
+      if (chipEl) {
+        chipEl.classList.add('hidden');
+        chipEl.style.display = 'none';
+      }
+
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session?.access_token) {
+          statusEl.textContent = 'Google: sessao expirada.';
+          atualizarStatusGoogleRail('rail-connection-danger', 'Google: sessao expirada');
+          return;
+        }
+
+        const data = await invokeGoogleSheetsFunction({ action: 'get_oauth_status' }, session.access_token);
+        if (data?.connected) {
+          statusEl.textContent = `Google conectado: ${data.google_email || 'conta autorizada'}`;
+          statusEl.classList.remove('text-danger');
+          atualizarStatusGoogleRail('rail-connection-success', `Google conectado: ${data.google_email || 'conta autorizada'}`);
+        } else {
+          statusEl.textContent = 'Google nao conectado. Clique em "Conectar Google".';
+          statusEl.classList.add('text-danger');
+          atualizarStatusGoogleRail('rail-connection-danger', 'Google nao conectado');
+        }
+      } catch (err) {
+        statusEl.textContent = `Google: erro ao verificar conexao (${err.message || 'erro'}).`;
+        statusEl.classList.add('text-danger');
+        atualizarStatusGoogleRail('rail-connection-danger', `Google com erro: ${err.message || 'erro'}`);
+      }
+    }
+
+    async function carregarIntegracoesGoogle() {
+      try {
+        const container = document.getElementById('gs-integracoes-list');
+        const healthPanel = document.getElementById('gs-health-panel');
+        if (container) {
+          container.innerHTML = `
+            <div class="card skeleton-card"></div>
+            <div class="card skeleton-card"></div>
+          `;
+        }
+        if (healthPanel) {
+          healthPanel.innerHTML = `
+            <div class="card skeleton-card"></div>
+            <div class="card skeleton-card"></div>
+            <div class="card skeleton-card"></div>
+          `;
+        }
+
+        const { data, error } = await supabaseClient
+          .from('integracao_planilhas_turma')
+          .select(`
+            id, turma_id, spreadsheet_id, spreadsheet_url, sheet_name, ativo, created_at,
+            turmas(nome_turma, disciplinas(nome))
+          `)
+          .eq('professor_id', perfil.id)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        integracoesGoogle = data || [];
+        await carregarSaudeIntegracoesGoogle();
+        renderIntegracoesGoogle();
+      } catch (err) {
+        console.error('Erro ao carregar integrações Google:', err);
+        const container = document.getElementById('gs-integracoes-list');
+        if (container) {
+          container.innerHTML = `<div class="card text-center text-danger">Erro ao carregar integrações: ${Utils.escapeHtml(err.message || 'erro inesperado')}</div>`;
+        }
+      }
+    }
+
+    async function carregarSaudeIntegracoesGoogle() {
+      const turmaIds = integracoesGoogle.map(item => item.turma_id).filter(Boolean);
+      googleSyncLogs = [];
+
+      if (!turmaIds.length) {
+        renderSaudeIntegracoesGoogle();
+        return;
+      }
+
+      const { data, error } = await supabaseClient
+        .from('google_sync_logs')
+        .select('turma_id, status, reason, attempted_at')
+        .in('turma_id', turmaIds)
+        .order('attempted_at', { ascending: false })
+        .limit(200);
+
+      if (error) throw error;
+
+      googleSyncLogs = data || [];
+      renderSaudeIntegracoesGoogle();
+    }
+
+    function renderSaudeIntegracoesGoogle() {
+      const panel = document.getElementById('gs-health-panel');
+      if (!panel) return;
+
+      if (!integracoesGoogle.length) {
+        panel.innerHTML = '';
+        return;
+      }
+
+      const corte24h = Date.now() - (24 * 60 * 60 * 1000);
+      const resumo = googleSyncLogs.reduce((acc, item) => {
+        acc.total += 1;
+        if (item.status === 'success') acc.success += 1;
+        if (item.status === 'error') acc.error += 1;
+        if (item.status === 'skipped') acc.skipped += 1;
+        if (item.status === 'error' && new Date(item.attempted_at).getTime() >= corte24h) acc.error24h += 1;
+        return acc;
+      }, { total: 0, success: 0, error: 0, skipped: 0, error24h: 0 });
+
+      const ultimoEvento = googleSyncLogs[0]
+        ? new Date(googleSyncLogs[0].attempted_at).toLocaleString('pt-BR')
+        : 'Nenhuma tentativa registrada';
+
+      panel.innerHTML = `
+        <div class="card">
+          <div class="text-sm text-muted">Último sync</div>
+          <div style="font-size:1.05rem;font-weight:700;">${Utils.escapeHtml(ultimoEvento)}</div>
+        </div>
+        <div class="card">
+          <div class="text-sm text-muted">Erros nas últimas 24h</div>
+          <div style="font-size:1.6rem;font-weight:700;">${resumo.error24h}</div>
+        </div>
+        <div class="card">
+          <div class="text-sm text-muted">Tentativas</div>
+          <div style="font-size:1.6rem;font-weight:700;">${resumo.total}</div>
+          <div class="text-sm text-muted mt-1">${resumo.success} sucesso, ${resumo.skipped} ignoradas, ${resumo.error} erro</div>
+        </div>
+      `;
+    }
+
+    function renderIntegracoesGoogle() {
+      popularSelectTurmasGoogle();
+
+      const container = document.getElementById('gs-integracoes-list');
+      if (!container) return;
+
+      if (!integracoesGoogle.length) {
+        container.innerHTML = `
+          <div class="empty-state card" style="grid-column:1/-1;">
+            <p>Nenhuma integração Google ativa.</p>
+            <p class="text-sm text-muted mt-1">Conecte sua conta Google e crie a primeira planilha da turma.</p>
+            <button class="btn btn-outline btn-sm mt-2" onclick="conectarGoogleOAuth()">Conectar Google</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = integracoesGoogle.map(item => {
+        const turmaNome = item.turmas?.nome_turma || 'Turma';
+        const discNome = item.turmas?.disciplinas?.nome || 'Disciplina';
+
+        return `
+          <div class="card">
+            <h4>${Utils.escapeHtml(discNome)} — ${Utils.escapeHtml(turmaNome)}</h4>
+            <p class="text-sm text-muted">Aba: ${Utils.escapeHtml(item.sheet_name || 'Frequencia')}</p>
+            <p class="text-sm text-muted">${montarResumoSaudeIntegracao(item.turma_id)}</p>
+            <div class="flex gap-1 mt-2">
+              <button class="btn btn-outline btn-sm" onclick="window.open('${Utils.escapeHtml(item.spreadsheet_url)}','_blank','noopener,noreferrer')">Abrir</button>
+              <button class="btn btn-outline btn-sm" onclick="sincronizarTurmaData('${item.turma_id}')">Sincronizar</button>
+              <button class="btn btn-ghost btn-sm" onclick="removerIntegracaoGoogle('${item.id}')">Remover</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function montarResumoSaudeIntegracao(turmaId) {
+      const logs = googleSyncLogs.filter(item => item.turma_id === turmaId);
+      if (!logs.length) return 'Sem histórico de sincronização.';
+
+      const ultimo = logs[0];
+      const erros = logs.filter(item => item.status === 'error').length;
+      return `Último evento: ${new Date(ultimo.attempted_at).toLocaleString('pt-BR')} (${ultimo.status}). Erros acumulados: ${erros}.`;
+    }
+
+    async function consumirRateLimit(actionKey, scopeKey, limit, windowSeconds) {
+      const { data, error } = await supabaseClient
+        .rpc('consumir_rate_limit', {
+          p_action_key: actionKey,
+          p_scope_key: scopeKey,
+          p_limit: limit,
+          p_window_seconds: windowSeconds,
+        });
+
+      if (error) throw error;
+
+      const result = Array.isArray(data) ? data[0] : data;
+      if (!result?.allowed) {
+        throw new Error(`Limite temporário atingido. Tente novamente em ${result?.retry_after_seconds || windowSeconds}s.`);
+      }
+
+      return result;
+    }
+
+    async function invokeGoogleSheetsFunction(payload, accessToken) {
+      console.log('📤 Chamando Google Sheets Function');
+      console.log('Payload:', payload);
+
+      try {
+        const { data: refreshed, error: refreshError } = await supabaseClient.auth.refreshSession();
+        if (refreshError) {
+          console.warn('Nao foi possivel renovar sessao automaticamente:', refreshError.message);
+        }
+
+        const session = refreshed?.session || (await supabaseClient.auth.getSession()).data.session;
+        const bearerToken = session?.access_token || accessToken;
+
+        if (!bearerToken) {
+          throw new Error('Token de sessao ausente. Faca login novamente.');
+        }
+
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/${CONFIG.GOOGLE_SHEETS_FUNCTION}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'x-user-token': bearerToken,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        console.log('✅ Response recebido. Status:', response.status);
+
+        let data = null;
+        try {
+          data = await response.json();
+          console.log('Response data:', data);
+        } catch (e) {
+          const text = await response.text();
+          console.log('Response text:', text);
+        }
+
+        if (!response.ok) {
+          throw new Error(data?.message || data?.error || `Falha (${response.status})`);
+        }
+
+        console.log('✅ SUCESSO! Data:', data);
+        return data || {};
+      } catch (error) {
+        console.error('❌ Erro:', error.message);
+        throw error;
+      }
+    }
+
+    async function criarPlanilhaGoogleTurma() {
+      const turmaId = document.getElementById('gs-turma-select').value;
+      if (!turmaId) {
+        Utils.showToast('Selecione uma turma.', 'warning');
+        return;
+      }
+
+      try {
+        Utils.showLoading('Criando planilha no Google Sheets...');
+
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session?.access_token) {
+          throw new Error('Sessão expirada. Faça login novamente.');
+        }
+
+        const data = await invokeGoogleSheetsFunction({
+          action: 'create_sheet',
+          turma_id: turmaId,
+        }, session.access_token);
+
+        if (!data?.ok) throw new Error(data?.error || 'Falha ao criar planilha Google.');
+
+        Utils.hideLoading();
+        Utils.showToast('Planilha criada com sucesso!', 'success');
+        await carregarIntegracoesGoogle();
+      } catch (err) {
+        Utils.hideLoading();
+        Utils.showToast(err.message || 'Erro ao criar planilha Google.', 'error');
+      }
+    }
+
+    async function sincronizarTurmaData(turmaIdParam = null) {
+      const turmaId = turmaIdParam || document.getElementById('gs-turma-select').value;
+      const dataBase = document.getElementById('gs-data').value || Utils.today();
+
+      if (!turmaId) {
+        Utils.showToast('Selecione uma turma para sincronizar.', 'warning');
+        return;
+      }
+
+      try {
+        Utils.showLoading('Sincronizando presença para Google Sheets...');
+
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session?.access_token) {
+          throw new Error('Sessão expirada. Faça login novamente.');
+        }
+
+        const { data: registros, error } = await supabaseClient
+          .from('presencas')
+          .select('id, google_synced, status, minutos_atraso, hora_registro, perfis!presencas_aluno_id_fkey(nome, matricula)')
+          .eq('turma_id', turmaId)
+          .eq('data', dataBase)
+          .order('hora_registro', { ascending: true });
+
+        if (error) throw error;
+
+        for (const reg of (registros || [])) {
+          if (reg.google_synced) continue;
+
+          const syncData = await invokeGoogleSheetsFunction({
+            action: 'sync_presence',
+            presence_id: reg.id,
+            turma_id: turmaId,
+          }, session.access_token);
+
+          if (syncData?.error) throw new Error(syncData.error);
+        }
+
+        Utils.hideLoading();
+        Utils.showToast('Sincronização concluída!', 'success');
+        await carregarIntegracoesGoogle();
+      } catch (err) {
+        Utils.hideLoading();
+        Utils.showToast(err.message || 'Erro ao sincronizar com Google Sheets.', 'error');
+      }
+    }
+
+    async function removerIntegracaoGoogle(integracaoId) {
+      if (!confirm('Remover integração desta turma com Google Sheets?')) return;
+
+      const { error } = await supabaseClient
+        .from('integracao_planilhas_turma')
+        .delete()
+        .eq('id', integracaoId);
+
+      if (error) {
+        Utils.showToast('Erro ao remover integração: ' + error.message, 'error');
+        return;
+      }
+
+      Utils.showToast('Integração removida.', 'success');
+      await carregarIntegracoesGoogle();
+    }
+
+    // ============================================
+    // PLANILHAS (CARDS + CRUD)
+    // ============================================
+    async function carregarPlanilhas() {
+      try {
+        const grid = document.getElementById('planilhas-grid');
+        if (grid) {
+          grid.innerHTML = `
+            <div class="card skeleton-card"></div>
+            <div class="card skeleton-card"></div>
+            <div class="card skeleton-card"></div>
+          `;
+        }
+
+        const { data, error } = await supabaseClient
+          .from('planilhas')
+          .select(`
+            id, nome, url, imagem_url, disciplina_id, turma_id, professor_id, created_at,
+            disciplinas(nome),
+            turmas(nome_turma)
+          `)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        minhasPlanilhas = data || [];
+        renderPlanilhas();
+      } catch (err) {
+        console.error('Erro ao carregar planilhas:', err);
+        const grid = document.getElementById('planilhas-grid');
+        if (grid) {
+          grid.innerHTML = `<div class="card text-center text-danger">Erro ao carregar planilhas: ${Utils.escapeHtml(err.message || 'erro inesperado')}</div>`;
+        }
+      }
+    }
+
+    function renderPlanilhas() {
+      const grid = document.getElementById('planilhas-grid');
+      if (!grid) return;
+
+      if (!minhasPlanilhas || minhasPlanilhas.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state card" style="grid-column:1/-1;">
+            <p>Nenhuma planilha cadastrada.</p>
+            <button class="btn btn-primary mt-2" onclick="modalNovaPlanilha()">+ Criar primeira planilha</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = minhasPlanilhas.map(p => {
+        const imagemPadrao = '../assets/logo.png';
+        const imagemCard = (p.imagem_url || '').trim() || imagemPadrao;
+        const capa = `<img class="planilha-thumb-img" src="${Utils.escapeHtml(imagemCard)}" alt="Capa da planilha" onerror="this.onerror=null;this.src='${imagemPadrao}';">`;
+
+        const turma = p.turmas?.nome_turma ? `<span class="badge badge-info">${Utils.escapeHtml(p.turmas.nome_turma)}</span>` : '';
+        const disciplina = p.disciplinas?.nome ? `<span class="badge badge-info">${Utils.escapeHtml(p.disciplinas.nome)}</span>` : '';
+        const ownerBadge = p.professor_id === perfil.id
+          ? '<span class="badge badge-success">Minha</span>'
+          : '<span class="badge badge-warning">Compartilhada</span>';
+
+        const actions = p.professor_id === perfil.id
+          ? `
+            <div class="planilha-actions">
+              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); modalEditarPlanilha('${p.id}')">Editar</button>
+              <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); deletarPlanilha('${p.id}')">Excluir</button>
+            </div>
+          `
+          : '';
+
+        return `
+          <article class="card planilha-card" data-url="${encodeURIComponent(p.url)}" onclick="abrirPlanilhaCard(this)">
+            <div class="planilha-thumb">${capa}</div>
+            <h4 class="planilha-title">${Utils.escapeHtml(p.nome)}</h4>
+            <div class="flex flex-wrap gap-1 mb-1">${ownerBadge}${disciplina}${turma}</div>
+            <p class="text-sm text-muted">Clique para abrir em nova aba</p>
+            ${actions}
+          </article>
+        `;
+      }).join('');
+
+      filtrarDashboardRapido();
+    }
+
+    function validarUrlHttps(valor, campo) {
+      try {
+        const normalizada = new URL((valor || '').trim());
+        if (normalizada.protocol !== 'https:') {
+          throw new Error(`${campo} deve começar com https://`);
+        }
+        return normalizada.toString();
+      } catch (err) {
+        throw new Error(`${campo} inválida. Use um link completo começando com https://`);
+      }
+    }
+
+    function abrirPlanilhaCard(el) {
+      try {
+        const encoded = el?.dataset?.url;
+        if (!encoded) return;
+        const decoded = decodeURIComponent(encoded);
+        const url = validarUrlHttps(decoded, 'URL da planilha');
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } catch (err) {
+        Utils.showToast(err.message, 'error');
+      }
+    }
+
+    function optionsDisciplinas(selectedId = '') {
+      return '<option value="">Sem vínculo</option>' + minhasDisciplinas.map(d =>
+        `<option value="${d.id}" ${selectedId === d.id ? 'selected' : ''}>${Utils.escapeHtml(d.nome)}</option>`
+      ).join('');
+    }
+
+    function optionsTurmas(selectedId = '') {
+      return '<option value="">Sem vínculo</option>' + minhasTurmas.map(t =>
+        `<option value="${t.id}" ${selectedId === t.id ? 'selected' : ''}>${Utils.escapeHtml(t.nome_turma)}</option>`
+      ).join('');
+    }
+
+    function modalNovaPlanilha() {
+      Utils.showModal('Nova Planilha', `
+        <form onsubmit="salvarPlanilha(event)">
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16M16 4v16"/></svg>
+            Dados da Planilha
+          </div>
+
+          <div class="form-group">
+            <label class="form-label required">Nome</label>
+            <input class="form-input" type="text" id="pl-nome" maxlength="200" placeholder="Ex: Presenças — 1º Semestre 2025" required autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label required">URL da Planilha</label>
+            <input class="form-input" type="url" id="pl-url" placeholder="https://docs.google.com/spreadsheets/..." required>
+            <span class="form-hint" onclick="toggleHint(this)" tabindex="0" role="button" aria-label="Mais informações">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span class="form-hint-text">Cole aqui o link de compartilhamento da planilha do Google Sheets.</span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Imagem de Capa (opcional)</label>
+            <input class="form-input" type="url" id="pl-img" placeholder="https://...">
+            <span class="form-hint" onclick="toggleHint(this)" tabindex="0" role="button" aria-label="Mais informações">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span class="form-hint-text">URL de uma imagem de preview para exibir no card da planilha.</span>
+            </span>
+          </div>
+
+          <div class="form-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Vínculos (opcional)
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Disciplina vinculada</label>
+            <select class="form-select" id="pl-disc">${optionsDisciplinas()}</select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Turma vinculada</label>
+            <select class="form-select" id="pl-turma">${optionsTurmas()}</select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:1rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar Planilha
+          </button>
+        </form>
+      `);
+    }
+
+    async function salvarPlanilha(e) {
+      e.preventDefault();
+
+      try {
+        const nome = document.getElementById('pl-nome').value.trim();
+        const url = validarUrlHttps(document.getElementById('pl-url').value, 'URL da planilha');
+        const imgRaw = document.getElementById('pl-img').value.trim();
+        const imagem_url = imgRaw ? validarUrlHttps(imgRaw, 'URL da imagem') : null;
+        const disciplina_id = document.getElementById('pl-disc').value || null;
+        const turma_id = document.getElementById('pl-turma').value || null;
+
+        const { error } = await supabaseClient
+          .from('planilhas')
+          .insert({
+            nome,
+            url,
+            imagem_url,
+            disciplina_id,
+            turma_id,
+            professor_id: perfil.id
+          });
+
+        if (error) throw error;
+
+        Utils.closeModal();
+        Utils.showToast('Planilha criada!', 'success');
+        await carregarPlanilhas();
+      } catch (err) {
+        Utils.showToast(err.message || 'Erro ao criar planilha.', 'error');
+      }
+    }
+
+    function modalEditarPlanilha(id) {
+      const planilha = minhasPlanilhas.find(p => p.id === id);
+      if (!planilha) return;
+
+      Utils.showModal('Editar Planilha', `
+        <form onsubmit="atualizarPlanilha(event, '${id}')">
+          <div class="form-group">
+            <label class="form-label">Nome</label>
+            <input class="form-input" type="text" id="pl-ed-nome" maxlength="200" value="${Utils.escapeHtml(planilha.nome)}" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">URL da planilha</label>
+            <input class="form-input" type="url" id="pl-ed-url" value="${Utils.escapeHtml(planilha.url)}" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Imagem (opcional)</label>
+            <input class="form-input" type="url" id="pl-ed-img" value="${Utils.escapeHtml(planilha.imagem_url || '')}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Disciplina vinculada (opcional)</label>
+            <select class="form-select" id="pl-ed-disc">${optionsDisciplinas(planilha.disciplina_id)}</select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Turma vinculada (opcional)</label>
+            <select class="form-select" id="pl-ed-turma">${optionsTurmas(planilha.turma_id)}</select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Atualizar</button>
+        </form>
+      `);
+    }
+
+    async function atualizarPlanilha(e, id) {
+      e.preventDefault();
+
+      try {
+        const nome = document.getElementById('pl-ed-nome').value.trim();
+        const url = validarUrlHttps(document.getElementById('pl-ed-url').value, 'URL da planilha');
+        const imgRaw = document.getElementById('pl-ed-img').value.trim();
+        const imagem_url = imgRaw ? validarUrlHttps(imgRaw, 'URL da imagem') : null;
+        const disciplina_id = document.getElementById('pl-ed-disc').value || null;
+        const turma_id = document.getElementById('pl-ed-turma').value || null;
+
+        const { error } = await supabaseClient
+          .from('planilhas')
+          .update({
+            nome,
+            url,
+            imagem_url,
+            disciplina_id,
+            turma_id,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', id);
+
+        if (error) throw error;
+
+        Utils.closeModal();
+        Utils.showToast('Planilha atualizada!', 'success');
+        await carregarPlanilhas();
+      } catch (err) {
+        Utils.showToast(err.message || 'Erro ao atualizar planilha.', 'error');
+      }
+    }
+
+    async function deletarPlanilha(id) {
+      if (!confirm('Excluir esta planilha?')) return;
+
+      const { error } = await supabaseClient
+        .from('planilhas')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        Utils.showToast('Erro ao excluir: ' + error.message, 'error');
+        return;
+      }
+
+      Utils.showToast('Planilha excluída.', 'success');
+      await carregarPlanilhas();
+    }
+
+    // ============================================
+    // RELATÓRIO DE PRESENÇAS
+    // ============================================
+    async function carregarPresencas() {
+      const turmaId = document.getElementById('pres-turma-select').value;
+      const data = document.getElementById('pres-data').value;
+      const tbody = document.getElementById('pres-tbody');
+      const resumo = document.getElementById('pres-filtro-resumo');
+
+      let query = supabaseClient
+        .from('presencas')
+        .select(`
+          id, data, hora_registro, status, minutos_atraso, distancia_metros, risco_fraude_score,
+          perfis!presencas_aluno_id_fkey(nome, matricula),
+          turmas!presencas_turma_id_fkey(nome_turma, disciplinas(nome, professor_id))
+        `)
+        .order('data', { ascending: false })
+        .order('hora_registro', { ascending: false })
+        .limit(200);
+
+      if (turmaId) query = query.eq('turma_id', turmaId);
+      if (data) query = query.eq('data', data);
+
+      const { data: presencas, error } = await query;
+
+      if (error) {
+        presencasCache = [];
+        presencasFiltradas = [];
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Erro: ${error.message}</td></tr>`;
+        if (resumo) resumo.textContent = 'Nao foi possivel carregar o relatorio agora.';
+        return;
+      }
+
+      // Filtrar apenas presenças do professor atual
+      presencasCache = (presencas || []).filter(p =>
+        p.turmas?.disciplinas?.professor_id === perfil.id
+      );
+
+      aplicarFiltrosPresencas();
+    }
+
+    function textoBuscaPresenca(registro) {
+      const statusLabel = registro.status === 'presente'
+        ? 'presente'
+        : registro.status === 'atrasado'
+          ? 'atrasado'
+          : 'ausente';
+      const hora = registro.hora_registro
+        ? new Date(registro.hora_registro).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        : '';
+      const nomeTurma = registro.turmas?.nome_turma || '';
+      const nomeDisciplina = registro.turmas?.disciplinas?.nome || '';
+      return normalizarBuscaTexto([
+        registro.perfis?.nome,
+        registro.perfis?.matricula,
+        nomeTurma,
+        nomeDisciplina,
+        Utils.formatDate(registro.data),
+        hora,
+        statusLabel,
+        registro.minutos_atraso ? `${registro.minutos_atraso} min` : ''
+      ].join(' '));
+    }
+
+    function renderizarTabelaPresencas(lista) {
+      const tbody = document.getElementById('pres-tbody');
+      if (!tbody) return;
+
+      if (!lista.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted p-3">Nenhum registro encontrado para os filtros atuais.</td></tr>';
+        atualizarPaginacaoResumo(0, 0);
+        return;
+      }
+
+      const totalPaginas = Math.max(1, Math.ceil(lista.length / presencasItensPorPagina));
+      presencasPaginaAtual = Math.min(presencasPaginaAtual, totalPaginas);
+      const inicio = (presencasPaginaAtual - 1) * presencasItensPorPagina;
+      const pagina = lista.slice(inicio, inicio + presencasItensPorPagina);
+
+      tbody.innerHTML = pagina.map(p => {
+        const badgeClass = p.status === 'presente' ? 'badge-success' : p.status === 'atrasado' ? 'badge-warning' : 'badge-danger';
+        const statusLabel = p.status === 'presente' ? 'Presente' : p.status === 'atrasado' ? 'Atrasado' : 'Ausente';
+        const hora = p.hora_registro ? new Date(p.hora_registro).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '--';
+        const nomeTurma = p.turmas?.nome_turma || '--';
+
+        return `<tr>
+          <td>${Utils.escapeHtml(p.perfis?.nome || '--')}</td>
+          <td>${Utils.escapeHtml(p.perfis?.matricula || '--')}</td>
+          <td>${Utils.escapeHtml(nomeTurma)}</td>
+          <td>${Utils.formatDate(p.data)}</td>
+          <td>${hora}</td>
+          <td><span class="badge ${badgeClass}">${statusLabel}</span></td>
+          <td>${p.minutos_atraso > 0 ? p.minutos_atraso + ' min' : '-'}</td>
+          <td>${renderBadgeRisco(p.risco_fraude_score || 0)}</td>
+        </tr>`;
+      }).join('');
+
+      atualizarPaginacaoResumo(lista.length, totalPaginas);
+    }
+
+    function ordenarPresencas(col) {
+      if (presencasSortCol === col) {
+        presencasSortAsc = !presencasSortAsc;
+      } else {
+        presencasSortCol = col;
+        presencasSortAsc = true;
+      }
+      aplicarFiltrosPresencas();
+    }
+
+    function valorSortPresenca(registro, col) {
+      switch (col) {
+        case 'nome':      return normalizarBuscaTexto(registro.perfis?.nome || '');
+        case 'matricula': return normalizarBuscaTexto(registro.perfis?.matricula || '');
+        case 'data':      return registro.data || '';
+        case 'hora':      return registro.hora_registro || '';
+        case 'status': {
+          const ord = { presente: 0, atrasado: 1, ausente: 2 };
+          return ord[registro.status] ?? 3;
+        }
+        case 'turma':     return normalizarBuscaTexto(registro.turmas?.nome_turma || '');
+        case 'atraso':    return registro.minutos_atraso || 0;
+        case 'risco':     return registro.risco_fraude_score || 0;
+        default:          return '';
+      }
+    }
+
+    function renderBadgeRisco(score) {
+      if (score >= 40) return `<span class="badge badge-danger">${score}</span>`;
+      if (score >= 20) return `<span class="badge badge-warning">${score}</span>`;
+      return `<span class="badge badge-success">${score}</span>`;
+    }
+
+    function atualizarIndicadoresSortPresencas() {
+      const ths = document.querySelectorAll('#pres-thead .pres-col-sort');
+      ths.forEach((th) => {
+        const col = th.dataset.col;
+        const icon = th.querySelector('.sort-icon');
+        if (col === presencasSortCol) {
+          th.classList.add('sort-active');
+          th.setAttribute('aria-sort', presencasSortAsc ? 'ascending' : 'descending');
+          if (icon) icon.textContent = presencasSortAsc ? ' ↑' : ' ↓';
+        } else {
+          th.classList.remove('sort-active');
+          th.setAttribute('aria-sort', 'none');
+          if (icon) icon.textContent = '';
+        }
+      });
+    }
+
+    function aplicarFiltrosPresencas() {
+      const status = document.getElementById('pres-status-select')?.value || '';
+      const buscaLocal = document.getElementById('pres-busca-local')?.value || '';
+      const buscaTopo = document.getElementById('dashboard-quick-filter')?.value || '';
+      const resumo = document.getElementById('pres-filtro-resumo');
+      const termoCombinado = [buscaTopo, buscaLocal].filter(Boolean).join(' ');
+
+      const filtrado = presencasCache.filter((registro) => {
+        const passouStatus = !status || registro.status === status;
+        const passouBusca = textoAtendeBusca(textoBuscaPresenca(registro), termoCombinado);
+        return passouStatus && passouBusca;
+      });
+
+      // Ordenação
+      filtrado.sort((a, b) => {
+        const va = valorSortPresenca(a, presencasSortCol);
+        const vb = valorSortPresenca(b, presencasSortCol);
+        let cmp = 0;
+        if (typeof va === 'number' && typeof vb === 'number') {
+          cmp = va - vb;
+        } else {
+          cmp = String(va).localeCompare(String(vb), 'pt-BR');
+        }
+        return presencasSortAsc ? cmp : -cmp;
+      });
+
+      presencasFiltradas = filtrado;
+      presencasPaginaAtual = 1;
+      salvarFiltrosPresencas();
+      atualizarIndicadoresSortPresencas();
+      renderizarTabelaPresencas(filtrado);
+
+      if (resumo) {
+        if (!presencasCache.length) {
+          resumo.textContent = 'Nenhum registro disponivel para a turma/data selecionadas.';
+        } else {
+          resumo.textContent = `${filtrado.length} de ${presencasCache.length} registro(s) exibidos.`;
+        }
+      }
+    }
+
+    function exportarCSV() {
+      if (!presencasFiltradas.length) {
+        Utils.showToast('Nenhum dado para exportar.', 'warning');
+        return;
+      }
+
+      let csv = 'Aluno,Matrícula,Turma,Data,Chegada,Status,Atraso\n';
+      presencasFiltradas.forEach((p) => {
+        const statusLabel = p.status === 'presente' ? 'Presente' : p.status === 'atrasado' ? 'Atrasado' : 'Ausente';
+        const hora = p.hora_registro ? new Date(p.hora_registro).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '--';
+        const linha = [
+          p.perfis?.nome || '--',
+          p.perfis?.matricula || '--',
+          p.turmas?.nome_turma || '--',
+          Utils.formatDate(p.data),
+          hora,
+          statusLabel,
+          p.minutos_atraso > 0 ? `${p.minutos_atraso} min` : '-'
+        ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',');
+        csv += linha + '\n';
+      });
+
+      const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `presencas_${Utils.today()}.csv`;
+      link.click();
+      Utils.showToast('CSV exportado!', 'success');
+    }
+
+    function montarLinhasExportacao() {
+      return presencasFiltradas.map((p) => ({
+        Aluno: p.perfis?.nome || '--',
+        Matricula: p.perfis?.matricula || '--',
+        Turma: p.turmas?.nome_turma || '--',
+        Data: Utils.formatDate(p.data),
+        Chegada: p.hora_registro ? new Date(p.hora_registro).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '--',
+        Status: p.status === 'presente' ? 'Presente' : p.status === 'atrasado' ? 'Atrasado' : 'Ausente',
+        Atraso: p.minutos_atraso > 0 ? `${p.minutos_atraso} min` : '-',
+        Risco: p.risco_fraude_score || 0,
+      }));
+    }
+
+    function exportarXLSX() {
+      if (!presencasFiltradas.length) {
+        Utils.showToast('Nenhum dado para exportar.', 'warning');
+        return;
+      }
+
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(montarLinhasExportacao());
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Presencas');
+      XLSX.writeFile(workbook, `presencas_${Utils.today()}.xlsx`);
+      Utils.showToast('XLSX exportado!', 'success');
+    }
+
+    function exportarPDF() {
+      if (!presencasFiltradas.length) {
+        Utils.showToast('Nenhum dado para exportar.', 'warning');
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'landscape' });
+      doc.setFontSize(14);
+      doc.text(`Relatório de Presenças - ${Utils.formatDate(Utils.today())}`, 14, 16);
+      doc.autoTable({
+        startY: 22,
+        head: [['Aluno', 'Matrícula', 'Turma', 'Data', 'Chegada', 'Status', 'Atraso', 'Risco']],
+        body: montarLinhasExportacao().map((item) => Object.values(item)),
+        styles: { fontSize: 9 },
+      });
+      doc.save(`presencas_${Utils.today()}.pdf`);
+      Utils.showToast('PDF exportado!', 'success');
+    }
+
+    function salvarFiltrosPresencas() {
+      localStorage.setItem('presencas_filtros_professor', JSON.stringify({
+        turma: document.getElementById('pres-turma-select')?.value || '',
+        data: document.getElementById('pres-data')?.value || '',
+        status: document.getElementById('pres-status-select')?.value || '',
+        busca: document.getElementById('pres-busca-local')?.value || '',
+        pageSize: document.getElementById('pres-page-size')?.value || '25',
+      }));
+    }
+
+    function restaurarFiltrosPresencas() {
+      try {
+        const raw = localStorage.getItem('presencas_filtros_professor');
+        if (!raw) return;
+        const filtros = JSON.parse(raw);
+        if (document.getElementById('pres-turma-select')) document.getElementById('pres-turma-select').value = filtros.turma || '';
+        if (document.getElementById('pres-data')) document.getElementById('pres-data').value = filtros.data || '';
+        if (document.getElementById('pres-status-select')) document.getElementById('pres-status-select').value = filtros.status || '';
+        if (document.getElementById('pres-busca-local')) document.getElementById('pres-busca-local').value = filtros.busca || '';
+        if (document.getElementById('pres-page-size')) document.getElementById('pres-page-size').value = filtros.pageSize || '25';
+        presencasItensPorPagina = parseInt(filtros.pageSize || '25', 10) || 25;
+      } catch (err) {
+        console.warn('Nao foi possivel restaurar filtros de presencas:', err);
+      }
+    }
+
+    function atualizarPaginacaoResumo(totalItens, totalPaginas) {
+      const resumo = document.getElementById('pres-page-summary');
+      const prev = document.getElementById('pres-page-prev');
+      const next = document.getElementById('pres-page-next');
+      if (resumo) resumo.textContent = totalItens ? `Página ${presencasPaginaAtual} de ${totalPaginas} • ${totalItens} registro(s)` : 'Sem registros';
+      if (prev) prev.disabled = presencasPaginaAtual <= 1;
+      if (next) next.disabled = presencasPaginaAtual >= totalPaginas;
+    }
+
+    function mudarPaginaPresencas(delta) {
+      presencasPaginaAtual = Math.max(1, presencasPaginaAtual + delta);
+      renderizarTabelaPresencas(presencasFiltradas);
+    }
+
+    function alterarPaginacaoPresencas() {
+      presencasItensPorPagina = parseInt(document.getElementById('pres-page-size')?.value || '25', 10) || 25;
+      presencasPaginaAtual = 1;
+      salvarFiltrosPresencas();
+      renderizarTabelaPresencas(presencasFiltradas);
+    }
+
+    async function carregarDashboardExecutivo() {
+      const container = document.getElementById('dash-executivo');
+      if (!container) return;
+
+      const periodoDias = parseInt(document.getElementById('dash-periodo')?.value || '30', 10);
+      const turmaIds = minhasTurmas.map((turma) => turma.id);
+      if (!turmaIds.length) {
+        container.innerHTML = '<div class="empty-state card" style="grid-column:1/-1;">Nenhuma turma disponível para métricas.</div>';
+        return;
+      }
+
+      const dataCorte = new Date();
+      dataCorte.setDate(dataCorte.getDate() - periodoDias);
+      const corte = dataCorte.toISOString().slice(0, 10);
+
+      const { data, error } = await supabaseClient
+        .from('presencas')
+        .select('status, minutos_atraso, risco_fraude_score, turmas!presencas_turma_id_fkey(nome_turma, disciplinas(nome))')
+        .in('turma_id', turmaIds)
+        .gte('data', corte);
+
+      if (error) {
+        container.innerHTML = `<div class="card text-danger" style="grid-column:1/-1;">Erro ao carregar dashboard executivo: ${Utils.escapeHtml(error.message)}</div>`;
+        return;
+      }
+
+      const registros = data || [];
+      const total = registros.length;
+      const mediaRisco = total ? Math.round(registros.reduce((sum, item) => sum + (item.risco_fraude_score || 0), 0) / total) : 0;
+      const mediaAtraso = total ? Math.round(registros.reduce((sum, item) => sum + (item.minutos_atraso || 0), 0) / total) : 0;
+
+      const porDisciplina = {};
+      const porTurma = {};
+      registros.forEach((item) => {
+        const disc = item.turmas?.disciplinas?.nome || 'Sem disciplina';
+        const turma = item.turmas?.nome_turma || 'Sem turma';
+        porDisciplina[disc] = (porDisciplina[disc] || 0) + 1;
+        porTurma[turma] = (porTurma[turma] || 0) + 1;
+      });
+
+      const topDisciplinas = Object.entries(porDisciplina).sort((a, b) => b[1] - a[1]).slice(0, 3)
+        .map(([nome, valor]) => `<li>${Utils.escapeHtml(nome)} <strong>${valor}</strong></li>`).join('') || '<li>Sem dados</li>';
+      const topTurmas = Object.entries(porTurma).sort((a, b) => b[1] - a[1]).slice(0, 3)
+        .map(([nome, valor]) => `<li>${Utils.escapeHtml(nome)} <strong>${valor}</strong></li>`).join('') || '<li>Sem dados</li>';
+
+      container.innerHTML = `
+        <div class="card">
+          <div class="text-sm text-muted">Presenças no período</div>
+          <div style="font-size:1.6rem;font-weight:700;">${total}</div>
+          <div class="text-sm text-muted mt-1">Média de atraso: ${mediaAtraso} min</div>
+        </div>
+        <div class="card">
+          <div class="text-sm text-muted">Risco médio</div>
+          <div style="font-size:1.6rem;font-weight:700;">${mediaRisco}</div>
+          <div class="text-sm text-muted mt-1">Score consolidado do período</div>
+        </div>
+        <div class="card">
+          <div class="text-sm text-muted">Top turmas</div>
+          <ul class="text-sm" style="margin:0.5rem 0 0 1rem;">${topTurmas}</ul>
+          <div class="text-sm text-muted mt-2">Top disciplinas</div>
+          <ul class="text-sm" style="margin:0.5rem 0 0 1rem;">${topDisciplinas}</ul>
+        </div>
+      `;
+    }
+
+    restoreSidebarState();
+    restaurarFiltrosPresencas();
+
+    // ============================================
+    // GERENCIAMENTO DE USUÁRIOS
+    // ============================================
+    let todosUsuarios = [];
+
+    async function carregarUsuarios() {
+      const tbody = document.getElementById('usuarios-tbody');
+      const resumo = document.getElementById('usuarios-resumo');
+      if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted p-3"><div class="spinner" style="margin:0 auto;"></div></td></tr>';
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('perfis')
+          .select('id, nome, matricula, email, role')
+          .order('nome');
+
+        if (error) throw error;
+
+        todosUsuarios = (data || []).filter(u => u.id !== perfil.id);
+
+        if (resumo) {
+          const totalAlunos = todosUsuarios.filter(u => u.role === 'aluno').length;
+          const totalProfs = todosUsuarios.filter(u => u.role === 'professor').length;
+          resumo.textContent = `${todosUsuarios.length} usuário(s) — ${totalProfs} professor(es), ${totalAlunos} aluno(s)`;
+        }
+
+        filtrarUsuarios();
+      } catch (err) {
+        console.error('Erro ao carregar usuários:', err);
+        if (tbody) tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted p-3">Erro ao carregar usuários: ${Utils.escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+
+    function filtrarUsuarios() {
+      const busca = (document.getElementById('usuarios-busca')?.value || '').toLowerCase().trim();
+      const filtroRole = document.getElementById('usuarios-filtro-role')?.value || '';
+
+      const filtrados = todosUsuarios.filter(u => {
+        const matchRole = !filtroRole || u.role === filtroRole;
+        const matchBusca = !busca || [u.nome, u.matricula, u.email].some(v => (v || '').toLowerCase().includes(busca));
+        return matchRole && matchBusca;
+      });
+
+      renderUsuarios(filtrados);
+    }
+
+    function renderUsuarios(lista) {
+      const tbody = document.getElementById('usuarios-tbody');
+      if (!tbody) return;
+
+      if (lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted p-3">Nenhum usuário encontrado.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = lista.map(u => {
+        const isProfessor = u.role === 'professor';
+        const badgeClass = isProfessor ? 'badge-info' : 'badge-neutral';
+        const badgeLabel = isProfessor ? 'Professor' : 'Aluno';
+        const nomeEscaped = Utils.escapeHtml(u.nome).replace(/'/g, "\\'");
+
+        return `<tr>
+          <td>${Utils.escapeHtml(u.nome)}</td>
+          <td>${Utils.escapeHtml(u.matricula)}</td>
+          <td>${Utils.escapeHtml(u.email)}</td>
+          <td><span class="badge ${badgeClass}">${badgeLabel}</span></td>
+          <td>
+            <div class="flex gap-1">
+              <button class="btn btn-ghost btn-sm" title="Editar usuário"
+                onclick="modalEditarUsuario('${u.id}', '${nomeEscaped}', '${Utils.escapeHtml(u.matricula)}')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+              </button>
+              <button class="btn btn-ghost btn-sm" title="Excluir usuário" style="color:var(--color-danger,#e53e3e);"
+                onclick="excluirUsuario('${u.id}', '${nomeEscaped}')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function modalEditarUsuario(usuarioId, nomeAtual, matriculaAtual) {
+      Utils.showModal('Editar Usuário', `
+        <form onsubmit="salvarEdicaoUsuario(event, '${usuarioId}')">
+          <div class="form-group">
+            <label class="form-label">Nome</label>
+            <input class="form-input" type="text" id="edit-usuario-nome" value="${Utils.escapeHtml(nomeAtual)}" required maxlength="200">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Matrícula</label>
+            <input class="form-input" type="text" id="edit-usuario-matricula" value="${Utils.escapeHtml(matriculaAtual)}" required maxlength="50">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Salvar alterações</button>
+        </form>
+      `);
+    }
+
+    async function salvarEdicaoUsuario(e, usuarioId) {
+      e.preventDefault();
+      const nome = document.getElementById('edit-usuario-nome').value.trim();
+      const matricula = document.getElementById('edit-usuario-matricula').value.trim();
+
+      try {
+        Utils.showLoading('Salvando alterações...');
+
+        const { error } = await supabaseClient.rpc('editar_perfil_usuario', {
+          p_usuario_id: usuarioId,
+          p_nome: nome,
+          p_matricula: matricula,
+        });
+
+        Utils.hideLoading();
+
+        if (error) throw error;
+
+        Utils.closeModal();
+        Utils.showToast('Usuário atualizado com sucesso!', 'success');
+        await carregarUsuarios();
+      } catch (err) {
+        Utils.hideLoading();
+        console.error('Erro ao editar usuário:', err);
+        Utils.showToast('Erro: ' + (err.message || 'Não foi possível salvar.'), 'error');
+      }
+    }
+
+    async function excluirUsuario(usuarioId, nomeUsuario) {
+      if (!confirm(`ATENÇÃO: Excluir "${nomeUsuario}" removerá permanentemente a conta e todos os registros de presença vinculados. Deseja continuar?`)) return;
+
+      try {
+        Utils.showLoading(`Excluindo ${nomeUsuario}...`);
+
+        const { error } = await supabaseClient.rpc('excluir_usuario', {
+          p_usuario_id: usuarioId,
+        });
+
+        Utils.hideLoading();
+
+        if (error) throw error;
+
+        Utils.showToast(`${nomeUsuario} foi excluído com sucesso.`, 'success');
+        await carregarUsuarios();
+      } catch (err) {
+        Utils.hideLoading();
+        console.error('Erro ao excluir usuário:', err);
+        Utils.showToast('Erro: ' + (err.message || 'Não foi possível excluir.'), 'error');
+      }
+    }
+
+    // Inicializar
+    init();
+  </script>
+</body>
+</html>

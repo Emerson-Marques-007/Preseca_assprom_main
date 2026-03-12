@@ -1,0 +1,86 @@
+/* 
+  ============================================
+  SISTEMA DE LOGOS - ASSPROM
+  ============================================
+  
+  COMO TROCAR A LOGO:
+  
+  1. Guarde seu novo arquivo de logo em:
+     /assets/logo.svg (substitua o arquivo existente)
+     
+  2. OU crie uma nova logo com um nome diferente:
+     /assets/logo-novo.svg
+     
+  3. Depois, no arquivo CSS principal (style.css),
+     altere a variável CSS:
+     --logo-path: url('../assets/logo-novo.svg');
+     
+  4. A logo será atualizada automaticamente em:
+     - Página de login
+     - Dashboards (aluno/professor)
+     - Navbar
+     - PWA manifest
+  
+  FORMATOS SUPORTADOS:
+  - SVG (recomendado - escalável)
+  - PNG (suporte básico)
+  - JPEG (suporte básico)
+  - WEBP (melhor performance)
+  
+  REQUISITOS DE DIMENSÃO:
+  - Mínimo: 180x180px (para PWA)
+  - Recomendado: 220x220px (logo grande)
+  - Máximo: 512x512px (PWA icon)
+  
+  ============================================
+*/
+
+:root {
+  /* Caminho para o arquivo de logo */
+  --logo-path: url('../assets/logo.png');
+  --logo-size: 220px;
+  --logo-navbar-size: 40px;
+}
+
+/* Logo principal (Auth page) */
+.auth-logo .icon {
+  background-image: var(--logo-path);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+/* Logo na navbar */
+.navbar-brand::before {
+  content: '';
+  display: inline-block;
+  width: var(--logo-navbar-size);
+  height: var(--logo-navbar-size);
+  margin-right: 0.5rem;
+  background-image: var(--logo-path);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+}
+
+/* Override para criar elemento de logo sem texto redundante */
+.logo-only {
+  width: var(--logo-size);
+  height: var(--logo-size);
+  background-image: var(--logo-path);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Logo pequena para sidebar/menu */
+.logo-sm {
+  width: var(--logo-navbar-size);
+  height: var(--logo-navbar-size);
+  background-image: var(--logo-path);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}

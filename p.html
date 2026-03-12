@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3D5A99">
+  <title>ASSPROM | Redirecionando...</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <script>
+    (function redirecionarParaPresenca() {
+      const params = new URLSearchParams(window.location.search);
+      const s = params.get('s');
+      const token = params.get('token');
+      const destino = new URL('presenca.html', window.location.href);
+
+      if (s) destino.searchParams.set('s', s);
+      if (token) destino.searchParams.set('token', token);
+
+      window.location.replace(destino.toString());
+    })();
+  </script>
+</head>
+<body>
+  <p style="font-family: system-ui, sans-serif; padding: 1rem;">Redirecionando...</p>
+</body>
+</html>

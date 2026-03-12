@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3D5A99">
+  <title>ASSPROM | Presença Digital — Confirmar Presença</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Loading -->
+  <div class="loading-overlay" id="loading-initial">
+    <div class="spinner"></div>
+    <p class="text-secondary">Validando QR Code...</p>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div class="auth-page" id="presenca-page" style="display:none;">
+    <div class="auth-card" style="max-width:480px;">
+
+      <!-- Estado: Validando -->
+      <div id="state-validando" class="hidden">
+        <div class="text-center p-4">
+          <div class="spinner" style="margin:0 auto 1rem;"></div>
+          <h2>Validando...</h2>
+          <p class="text-secondary">Verificando token e localização</p>
+        </div>
+      </div>
+
+      <!-- Estado: Pedir login -->
+      <div id="state-login" class="hidden">
+        <div class="auth-logo">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h2>Faça Login para Continuar</h2>
+          <p class="text-secondary text-sm">Você precisa estar logado para marcar presença</p>
+        </div>
+        <a href="index.html" class="btn btn-primary btn-block btn-lg">Fazer Login</a>
+      </div>
+
+      <!-- Estado: Confirmar presença -->
+      <div id="state-confirmar" class="hidden">
+        <div class="text-center mb-3">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="margin:0 auto;">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+          </svg>
+          <h2 class="mt-1">Confirmar Presença</h2>
+        </div>
+
+        <div class="card mb-2" style="background:var(--primary-light);">
+          <p class="text-sm"><strong>Disciplina:</strong> <span id="conf-disciplina"></span></p>
+          <p class="text-sm"><strong>Turma:</strong> <span id="conf-turma"></span></p>
+          <p class="text-sm"><strong>Horário:</strong> <span id="conf-horario"></span></p>
+          <p class="text-sm"><strong>Sala:</strong> <span id="conf-sala"></span></p>
+        </div>
+
+        <!-- GPS Status -->
+        <div id="gps-status-container" class="mb-2">
+          <div class="gps-status locating" id="gps-indicator">
+            <span class="gps-dot"></span>
+            <span id="gps-text">Obtendo localização...</span>
+          </div>
+        </div>
+
+        <button class="btn btn-success btn-block btn-lg" id="btn-confirmar" onclick="confirmarPresenca()" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Confirmar Presença
+        </button>
+      </div>
+
+      <!-- Estado: Sucesso -->
+      <div id="state-sucesso" class="hidden">
+        <div class="text-center p-3">
+          <div class="check-animation" style="margin:0 auto;">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="mt-2" id="suc-titulo">Presença Registrada!</h2>
+          <p class="text-secondary" id="suc-detalhe"></p>
+          <div class="mt-2">
+            <p class="text-sm"><strong>Disciplina:</strong> <span id="suc-disciplina"></span></p>
+            <p class="text-sm"><strong>Horário de chegada:</strong> <span id="suc-hora"></span></p>
+            <p class="text-sm"><strong>Status:</strong> <span id="suc-status"></span></p>
+          </div>
+          <a href="aluno/index.html" class="btn btn-primary btn-block mt-3">Ir para o Painel</a>
+        </div>
+      </div>
+
+      <!-- Estado: Erro -->
+      <div id="state-erro" class="hidden">
+        <div class="text-center p-3">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="margin:0 auto;">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <h2 class="mt-2">Erro</h2>
+          <p class="text-secondary" id="erro-msg"></p>
+          <div class="flex gap-1 mt-3" style="justify-content:center;">
+            <a href="aluno/index.html" class="btn btn-primary">Ir para o Painel</a>
+            <button class="btn btn-outline" onclick="location.reload()">Tentar Novamente</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado: Já marcou -->
+      <div id="state-ja-marcou" class="hidden">
+        <div class="text-center p-3">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="margin:0 auto;">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <h2 class="mt-2">Presença Já Registrada</h2>
+          <p class="text-secondary">Você já marcou presença nesta aula hoje.</p>
+          <a href="aluno/index.html" class="btn btn-primary mt-3">Ir para o Painel</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    let dadosTurma = null;
+    let localizacaoAluno = null;
+    let perfilAluno = null;
+
+    function mostrarEstado(estado) {
+      ['validando', 'login', 'confirmar', 'sucesso', 'erro', 'ja-marcou'].forEach(s => {
+        document.getElementById('state-' + s).classList.toggle('hidden', s !== estado);
+      });
+      document.getElementById('loading-initial').style.display = 'none';
+      document.getElementById('presenca-page').style.display = '';
+    }
+
+    async function init() {
+      let token = Utils.getQueryParam('token');
+      const slug = Utils.getQueryParam('s');
+
+      if (!token && !slug) {
+        mostrarEstado('erro');
+        document.getElementById('erro-msg').textContent = 'Nenhum token de QR Code fornecido. Escaneie o QR Code na sala.';
+        return;
+      }
+
+      // Verificar se está logado
+      const session = await Auth.getSession();
+      if (!session) {
+        // Salvar token/slug e redirecionar para login
+        if (token) sessionStorage.setItem('qr_token', token);
+        if (slug) sessionStorage.setItem('qr_slug', slug);
+        mostrarEstado('login');
+        return;
+      }
+
+      perfilAluno = await Auth.getPerfil();
+      if (!perfilAluno || perfilAluno.role !== 'aluno') {
+        mostrarEstado('erro');
+        document.getElementById('erro-msg').textContent = 'Apenas alunos podem marcar presença.';
+        return;
+      }
+
+      mostrarEstado('validando');
+
+      try {
+        if (!token && slug) {
+          const { data: slugData, error: slugErr } = await supabaseClient
+            .rpc('resolver_token_por_slug', { p_slug: slug });
+
+          if (slugErr || !slugData || slugData.length === 0 || !slugData[0].token) {
+            mostrarEstado('erro');
+            document.getElementById('erro-msg').textContent = 'Link curto inválido ou expirado.';
+            return;
+          }
+
+          token = slugData[0].token;
+        }
+
+        // 1. Validar token
+        const { data: tokenData, error: tokenErr } = await supabaseClient
+          .rpc('validar_qr_token', { p_token: token });
+
+        if (tokenErr || !tokenData || tokenData.length === 0) {
+          mostrarEstado('erro');
+          document.getElementById('erro-msg').textContent = 'QR Code inválido ou não encontrado.';
+          return;
+        }
+
+        const turma = tokenData[0];
+
+        if (!turma.token_valido) {
+          mostrarEstado('erro');
+          document.getElementById('erro-msg').textContent = 'Este QR Code expirou. Peça ao professor para gerar um novo.';
+          return;
+        }
+
+        dadosTurma = turma;
+
+        // 2. Auto-vincular aluno na turma (idempotente)
+        const { error: vinculoErr } = await supabaseClient
+          .rpc('auto_vincular_aluno_turma', { p_turma_id: turma.turma_id });
+
+        if (vinculoErr) {
+          mostrarEstado('erro');
+          document.getElementById('erro-msg').textContent = vinculoErr.message || 'Não foi possível vincular você à turma.';
+          return;
+        }
+
+        // 3. Verificar se já marcou hoje
+        const { data: existente } = await supabaseClient
+          .from('presencas')
+          .select('id')
+          .eq('aluno_id', perfilAluno.id)
+          .eq('turma_id', turma.turma_id)
+          .eq('data', Utils.today())
+          .single();
+
+        if (existente) {
+          mostrarEstado('ja-marcou');
+          return;
+        }
+
+        // 4. Mostrar tela de confirmação
+        document.getElementById('conf-disciplina').textContent = turma.disciplina_nome;
+        document.getElementById('conf-turma').textContent = turma.nome_turma;
+        document.getElementById('conf-horario').textContent =
+          `${Utils.formatTime(turma.hora_inicio)} - ${Utils.formatTime(turma.hora_fim)}`;
+        document.getElementById('conf-sala').textContent = turma.sala || 'Não informada';
+
+        mostrarEstado('confirmar');
+
+        // 5. Obter geolocalização
+        await obterGPS();
+
+      } catch (err) {
+        console.error(err);
+        mostrarEstado('erro');
+        document.getElementById('erro-msg').textContent = err.message || 'Erro inesperado.';
+      }
+    }
+
+    async function obterGPS() {
+      const indicator = document.getElementById('gps-indicator');
+      const gpsText = document.getElementById('gps-text');
+      const btnConfirmar = document.getElementById('btn-confirmar');
+
+      try {
+        indicator.className = 'gps-status locating';
+        gpsText.textContent = 'Obtendo localização...';
+
+        localizacaoAluno = await Utils.obterLocalizacao();
+
+        // Validar distância
+        if (dadosTurma.latitude && dadosTurma.longitude) {
+          const validacao = Utils.validarLocalizacao(
+            localizacaoAluno.latitude, localizacaoAluno.longitude,
+            dadosTurma.latitude, dadosTurma.longitude,
+            dadosTurma.raio_metros || CONFIG.RAIO_PADRAO_METROS
+          );
+
+          if (validacao.dentroDoRaio) {
+            indicator.className = 'gps-status located';
+            gpsText.textContent = `Localização confirmada (${validacao.distancia}m da sala)`;
+            btnConfirmar.disabled = false;
+          } else {
+            if (dadosTurma.ble_service_uuid || dadosTurma.ble_device_name) {
+              try {
+                const device = await validarPresencaBLE(dadosTurma);
+                indicator.className = 'gps-status located';
+                gpsText.textContent = `Validação BLE confirmada (${device.name || 'dispositivo próximo'})`;
+                btnConfirmar.disabled = false;
+              } catch (bleErr) {
+                indicator.className = 'gps-status error';
+                gpsText.textContent = `Você está a ${validacao.distancia}m da sala e a validação BLE falhou: ${bleErr.message}`;
+                btnConfirmar.disabled = true;
+                setTimeout(obterGPS, 5000);
+              }
+            } else {
+              indicator.className = 'gps-status error';
+              gpsText.textContent = `Você está a ${validacao.distancia}m da sala (máx: ${dadosTurma.raio_metros || CONFIG.RAIO_PADRAO_METROS}m). Aproxime-se.`;
+              btnConfirmar.disabled = true;
+
+              // Tentar novamente em 5 segundos
+              setTimeout(obterGPS, 5000);
+            }
+          }
+        } else {
+          // Sem GPS configurado na turma — permitir
+          indicator.className = 'gps-status located';
+          gpsText.textContent = 'Localização obtida (sem validação de sala)';
+          btnConfirmar.disabled = false;
+        }
+
+      } catch (err) {
+        indicator.className = 'gps-status error';
+        gpsText.textContent = err.message;
+
+        // Permitir mesmo sem GPS se a turma não tem coordenadas
+        if (!dadosTurma.latitude) {
+          btnConfirmar.disabled = false;
+          gpsText.textContent += ' (presença será aceita sem GPS)';
+        }
+      }
+    }
+
+    async function validarPresencaBLE(turma) {
+      if (!('bluetooth' in navigator)) {
+        throw new Error('Bluetooth não disponível neste dispositivo/navegador.');
+      }
+
+      const bleService = (turma.ble_service_uuid || '').trim();
+      const bleName = (turma.ble_device_name || '').trim();
+      if (!bleService && !bleName) {
+        throw new Error('Esta turma não possui configuração BLE.');
+      }
+
+      const options = bleName
+        ? { filters: [{ namePrefix: bleName }], optionalServices: bleService ? [bleService] : [] }
+        : { acceptAllDevices: true, optionalServices: [bleService] };
+
+      const device = await navigator.bluetooth.requestDevice(options);
+
+      if (bleService) {
+        const server = await device.gatt?.connect();
+        if (!server) {
+          throw new Error('Não foi possível conectar ao dispositivo BLE.');
+        }
+        await server.getPrimaryService(bleService);
+        server.disconnect();
+      }
+
+      return device;
+    }
+
+    async function mostrarNotificacaoLocal(title, body, url = 'aluno/index.html') {
+      if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+      const registration = await navigator.serviceWorker?.ready.catch(() => null);
+      if (registration?.showNotification) {
+        await registration.showNotification(title, {
+          body,
+          icon: 'assets/logo.png',
+          badge: 'assets/logo.png',
+          data: { url },
+        });
+        return;
+      }
+
+      new Notification(title, { body, icon: 'assets/logo.png' });
+    }
+
+    function calcularRiscoFraudePresenca({ distancia, minutosAtraso, validacaoBle, turma }) {
+      const motivos = [];
+      let score = 0;
+
+      if (validacaoBle) {
+        score += 15;
+        motivos.push('validacao_ble');
+      }
+
+      if (typeof distancia === 'number' && turma?.raio_metros) {
+        const proporcao = distancia / turma.raio_metros;
+        if (proporcao >= 0.8) {
+          score += 25;
+          motivos.push('gps_proximo_limite');
+        }
+      }
+
+      if ((minutosAtraso || 0) >= 15) {
+        score += 20;
+        motivos.push('atraso_relevante');
+      }
+
+      return { score: Math.min(100, score), motivos };
+    }
+
+    async function consumirRateLimit(actionKey, scopeKey, limit, windowSeconds) {
+      const { data, error } = await supabaseClient
+        .rpc('consumir_rate_limit', {
+          p_action_key: actionKey,
+          p_scope_key: scopeKey,
+          p_limit: limit,
+          p_window_seconds: windowSeconds,
+        });
+
+      if (error) throw error;
+
+      const result = Array.isArray(data) ? data[0] : data;
+      if (!result?.allowed) {
+        throw new Error(`Muitas tentativas em sequência. Tente novamente em ${result?.retry_after_seconds || windowSeconds}s.`);
+      }
+
+      return result;
+    }
+
+    async function confirmarPresenca() {
+      const btn = document.getElementById('btn-confirmar');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner spinner-sm"></div> Registrando...';
+
+      try {
+        await consumirRateLimit('presence_attempt', dadosTurma.turma_id, 6, 300);
+
+        const horaRegistro = Utils.currentTime();
+        const statusCalc = Utils.calcularStatusPresenca(dadosTurma.hora_inicio, horaRegistro);
+
+        let distancia = null;
+        if (localizacaoAluno && dadosTurma.latitude) {
+          distancia = Math.round(Utils.calcularDistancia(
+            localizacaoAluno.latitude, localizacaoAluno.longitude,
+            dadosTurma.latitude, dadosTurma.longitude
+          ));
+        }
+
+        const riscoFraude = calcularRiscoFraudePresenca({
+          distancia,
+          minutosAtraso: statusCalc.minutos_atraso,
+          validacaoBle: false,
+          turma: dadosTurma,
+        });
+
+        const { data: novaPresenca, error } = await supabaseClient
+          .from('presencas')
+          .insert({
+            aluno_id: perfilAluno.id,
+            turma_id: dadosTurma.turma_id,
+            data: Utils.today(),
+            hora_registro: new Date().toISOString(),
+            status: statusCalc.status,
+            minutos_atraso: statusCalc.minutos_atraso,
+            latitude_aluno: localizacaoAluno?.latitude || null,
+            longitude_aluno: localizacaoAluno?.longitude || null,
+            distancia_metros: distancia,
+            metodo: 'qrcode',
+            risco_fraude_score: riscoFraude.score,
+            risco_fraude_motivos: riscoFraude.motivos,
+          })
+          .select('id')
+          .single();
+
+        if (error) {
+          if (error.code === '23505') {
+            mostrarEstado('ja-marcou');
+            return;
+          }
+          throw error;
+        }
+
+        // Sincronizar com Google Sheets (não bloqueia o fluxo principal)
+        try {
+          const frequencia = statusCalc.status === 'ausente' ? 'F' : 'P';
+          const horarioMarcacao = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          if (!session?.access_token) {
+            throw new Error('Sessão ausente para sincronização.');
+          }
+
+          const syncResponse = await fetch(`${SUPABASE_URL}/functions/v1/${CONFIG.GOOGLE_SHEETS_FUNCTION}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${session.access_token}`,
+            },
+            body: JSON.stringify({
+              action: 'sync_presence',
+              presence_id: novaPresenca.id,
+              turma_id: dadosTurma.turma_id,
+            }),
+          });
+
+          const syncData = await syncResponse.json().catch(() => null);
+          if (!syncResponse.ok || syncData?.error) {
+            throw new Error(syncData?.error || `Falha na sincronizacao (${syncResponse.status})`);
+          }
+
+          if (syncData?.skipped) {
+            console.warn('Sync Google Sheets ignorado (QR):', syncData.reason || 'sem motivo informado');
+          }
+        } catch (syncErr) {
+          console.warn('Sync Google Sheets falhou (QR):', syncErr);
+        }
+
+        // Sucesso!
+        document.getElementById('suc-disciplina').textContent = dadosTurma.disciplina_nome;
+        document.getElementById('suc-hora').textContent = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+        if (statusCalc.status === 'presente') {
+          document.getElementById('suc-titulo').textContent = 'Presença Registrada!';
+          document.getElementById('suc-status').innerHTML = '<span class="badge badge-success">Presente</span>';
+          document.getElementById('suc-detalhe').textContent = 'Você chegou no horário!';
+        } else {
+          document.getElementById('suc-titulo').textContent = 'Presença com Atraso';
+          document.getElementById('suc-status').innerHTML =
+            `<span class="badge badge-warning">Atrasado (${statusCalc.minutos_atraso} min)</span>`;
+          document.getElementById('suc-detalhe').textContent =
+            `Você chegou ${statusCalc.minutos_atraso} minutos após o início da aula.`;
+        }
+
+        await mostrarNotificacaoLocal('Presença confirmada', `Sua presença em ${dadosTurma.disciplina_nome} foi registrada.`);
+
+        mostrarEstado('sucesso');
+
+      } catch (err) {
+        console.error(err);
+        mostrarEstado('erro');
+        document.getElementById('erro-msg').textContent = err.message || 'Erro ao registrar presença.';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
