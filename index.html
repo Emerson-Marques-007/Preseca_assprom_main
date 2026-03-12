@@ -20,14 +20,38 @@
   </div>
 
   <div class="auth-page" id="auth-page" style="display:none;">
-    <div class="main-content">
-      <header class="aluno-header" style="background:#fff;border-bottom:1px solid #eee;padding:1.5rem 0 1rem 0;text-align:center;position:relative;">
-        <h1 style="font-size:2rem;font-weight:700;color:#3D5A99;margin:0;">Painel do Aluno</h1>
-        <p style="font-size:1.1rem;color:#555;margin-top:0.5rem;">Acompanhe suas presenças, aulas e histórico</p>
-        <button class="btn btn-ghost btn-icon" onclick="Auth.logout()" title="Sair" aria-label="Sair" style="position:absolute;top:1.5rem;right:1.5rem;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        </button>
-      </header>
+    <div class="auth-card">
+      <!-- 
+        LOGO - Como Trocar:
+        1. Coloque seu arquivo em /assets/logo.svg (ou outro formato)
+        2. Edite /css/style.css e altere:
+           --logo-path: url('../assets/logo.svg');
+        3. Recarregue a página: Ctrl+F5
+        
+        Leia /LOGO-USAGE.md para mais informações
+      -->
+      <div class="auth-logo">
+        <div class="icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Tabs Login / Cadastro -->
+      <div class="tabs-container">
+        <div class="tabs" style="justify-content:center;">
+          <button class="tab active" onclick="showTab('login')" id="tab-login">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            Entrar
+          </button>
+          <button class="tab" onclick="showTab('cadastro')" id="tab-cadastro">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
               <circle cx="8.5" cy="7" r="4"/>
               <line x1="20" y1="8" x2="20" y2="14"/>
